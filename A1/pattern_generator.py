@@ -15,5 +15,9 @@ height = 200
 ## Setting up the canvas
 canvas = np.zeros((height, width)) 
 
-## creating a given number of random attractor points
+## Creating a given number of random attractor points
 attractors = np.random.random((attr_n, 2)) * 200
+
+## Defining function for euclidean distance
+def distance(point1, point2):
+    return np.sqrt(np.sum((point1 - point2) ** 2, axis=1))
