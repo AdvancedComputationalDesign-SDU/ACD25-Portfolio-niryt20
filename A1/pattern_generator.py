@@ -13,7 +13,7 @@ width = 200
 height = 200
 
 ## Setting up the canvas
-canvas = np.zeros((height, width)) 
+canvas = np.zeros((height, width, 3)) 
 
 ## Creating a given number of random attractor points
 attractors = np.random.random((attr_n, 2)) * 200
