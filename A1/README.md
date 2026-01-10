@@ -11,6 +11,8 @@ search_exclude: false
 
 # Assignment 1: NumPy Array Manipulation for 2D Pattern Generation
 
+[View on GitHub]({{ site.github.repository_url }})
+
 ## Table of Contents
 
 - [Objective](#Objective)
