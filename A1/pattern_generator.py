@@ -7,12 +7,12 @@ np.random.seed(1)
 
 ## Sin function frequency
 # Frequency parameter (1.0 to 4.0)
-f_p = 2.5
+f_p = 1.5
 
 ff = (1/(f_p*3.14))
 
 ## Number of attractor points
-attr_n = 1
+attr_n = 7
 
 ## Canvas dimensions
 width = 200

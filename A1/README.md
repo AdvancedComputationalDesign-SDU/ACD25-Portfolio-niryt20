@@ -11,12 +11,29 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
-|parameter 1|parameter 2|parameter 3|
+|Number of Attractor Points|Frequency Parameter|Seed|
 |----|----|----|
-|1.5|3.14|6.6|
-|en|to|tre|
+|1|1.5|1|
 
-![Example Image](images/perlin_moire.png)
+![Image 1](images/1_1-5.png)
+
+|Number of Attractor Points|Frequency Parameter|Seed|
+|----|----|----|
+|7|1.5|1|
+
+![Image 2](images/7_1-5.png)
+
+|Number of Attractor Points|Frequency Parameter|Seed|
+|----|----|----|
+|1|3.5|1|
+
+![Image 3](images/1_3-5.png)
+
+|Number of Attractor Points|Frequency Parameter|Seed|
+|----|----|----|
+|7|3.5|1|
+
+![Image 4](images/7_3-5.png)
 
 ## Objective
 
