@@ -21,3 +21,17 @@ attractors = np.random.random((attr_n, 2)) * 200
 ## Defining function for euclidean distance
 def distance(point1, point2):
     return np.sqrt(np.sum((point1 - point2) ** 2, axis=1))
+
+## A loop, distance check for each pixel, convertions to sin function and coloring the canvas
+for x in range(width):
+    for y in range(height):
+        # Calculating distance from pixel to all attractors
+        dists = distance(np.array([x, y]), attractors)
+        #Sin function for distance
+        s = np.sin(dists*ff)
+        # Summation of the sine of distances to get interference
+        s = np.array(s)
+        ss = sum(s)
+        color = ss 
+        ## Updating the canvas with final summed values
+        canvas[y, x] = color
