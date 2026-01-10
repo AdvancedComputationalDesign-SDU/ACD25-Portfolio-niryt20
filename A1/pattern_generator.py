@@ -37,11 +37,11 @@ for x in range(width):
         ss = sum(s)
 
         # RGB channels
-        r = (np.sin(ss) + 1)
-        g = (np.cos(ss) + 1)
-        b = ss
+        r = (np.sin(ss) + 1) / 2
+        g = (np.cos(ss) + 1) / 2
+        b = (np.mean(dists) / np.max(dists))
 
-        ## Updating the canvas with final summed values
+        # Updating the canvas with final summed values
         canvas[y, x, 0] = r
         canvas[y, x, 1] = g
         canvas[y, x, 2] = b
@@ -53,6 +53,3 @@ plt.axis('off')
 ## Printing the plot in new window
 plt.show() 
 
-print(r)
-print(g)
-print(b)
