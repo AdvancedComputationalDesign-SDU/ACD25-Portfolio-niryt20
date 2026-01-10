@@ -37,14 +37,16 @@ for x in range(width):
         ss = sum(s)
 
         # RGB channels
-        r = (np.sin(ss))
-        g = (np.cos(ss))
+        r = (np.sin(ss+1))
+        g = (np.cos(ss+1))
         b = (dists)
+
         ## Updating the canvas with final summed values
-        canvas[y, x] = color
+        canvas[y, x, 0] = r
+        canvas[y, x, 1] = g
 
 ## hsv to show values
-plt.imshow(canvas, cmap='hsv')
+plt.imshow(canvas)
 ## Hiding axis
 plt.axis('off') 
 ## Printing the plot in new window
