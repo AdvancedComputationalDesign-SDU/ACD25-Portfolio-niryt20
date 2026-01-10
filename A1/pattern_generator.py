@@ -3,10 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ## Sin function frequency
-ff = (1/(1.5*3.14))
+# Frequency parameter (1.0 to 4.0)
+f_p = 2.5
+
+ff = (1/(f_p*3.14))
 
 ## Number of attractor points
-attr_n = 7
+attr_n = 2
 
 ## Canvas dimensions
 width = 200
@@ -36,7 +39,7 @@ for x in range(width):
 
         ss = sum(s)
 
-        # RGB channels
+        # RGB channels, normalized
         r = (np.sin(ss) + 1) / 2
         g = (np.cos(ss) + 1) / 2
         b = (np.mean(dists) / np.max(dists))
