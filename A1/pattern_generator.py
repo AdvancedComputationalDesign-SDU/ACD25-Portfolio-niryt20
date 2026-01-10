@@ -2,6 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+## Seed
+np.random.seed(1)
+
 ## Sin function frequency
 # Frequency parameter (1.0 to 4.0)
 f_p = 2.5
@@ -9,7 +12,7 @@ f_p = 2.5
 ff = (1/(f_p*3.14))
 
 ## Number of attractor points
-attr_n = 2
+attr_n = 1
 
 ## Canvas dimensions
 width = 200
@@ -49,10 +52,8 @@ for x in range(width):
         canvas[y, x, 1] = g
         canvas[y, x, 2] = b
 
-## hsv to show values
+## Visualization
 plt.imshow(canvas)
-## Hiding axis
 plt.axis('off') 
-## Printing the plot in new window
 plt.show() 
 
