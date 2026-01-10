@@ -10,7 +10,6 @@ search_exclude: false
 
 
 # Assignment 1: NumPy Array Manipulation for 2D Pattern Generation
-[View on GitHub]({{ site.github.repository_url }})
 
 ## Table of Contents
 
@@ -24,6 +23,30 @@ search_exclude: false
 The goal of this assignment is to create a Python program using NumPy to manipulate a 2-dimensional array and transform a blank canvas into a patterned image. You are asked apply various array operations, introduce randomness, and work with RGB channels to produce full-color images.
 
 ## Pseudo-Code
+
+1. **Initialize Variables**
+   - Set canvas dimensions (height and width).
+   - Define color values.
+   - Set number of attractor points
+
+2. **Create Blank Canvas**
+   - Initialize a 2D NumPy array filled with zeros.
+
+3. **Generate Attractor Points**
+    -  Generate random attractor points within canvas dimensions
+
+4. **Define Distance Function**
+    - Compute euclidian distance to attractor point
+
+5. **Generate Pattern**
+    - **For** each pixel in canvas_
+        - Compute distance to attractor points
+        - Apply sine to distances
+        - Sum sine values
+        - Map normalized values to RGB channels
+        - Store values in canvas
+
+6. **Visualize Canvas as Image**
 
 ## Technical Explaination
 
