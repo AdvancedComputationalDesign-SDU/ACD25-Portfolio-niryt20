@@ -35,3 +35,10 @@ for x in range(width):
         color = ss 
         ## Updating the canvas with final summed values
         canvas[y, x] = color
+
+## hsv to show values
+plt.imshow(canvas, cmap='hsv')
+## Hiding axis
+plt.axis('off') 
+## Printing the plot in new window
+plt.show() 
