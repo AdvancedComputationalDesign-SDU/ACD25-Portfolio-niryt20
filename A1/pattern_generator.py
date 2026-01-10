@@ -27,12 +27,19 @@ for x in range(width):
     for y in range(height):
         # Calculating distance from pixel to all attractors
         dists = distance(np.array([x, y]), attractors)
+
         #Sin function for distance
         s = np.sin(dists*ff)
+
         # Summation of the sine of distances to get interference
         s = np.array(s)
+
         ss = sum(s)
-        color = ss 
+
+        # RGB channels
+        r = (np.sin(ss))
+        g = (np.cos(ss))
+        b = (dists)
         ## Updating the canvas with final summed values
         canvas[y, x] = color
 
