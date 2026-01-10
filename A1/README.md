@@ -11,6 +11,11 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
+|parameter 1|parameter 2|parameter 3|
+|----|----|----|
+|1.5|3.14|6.6|
+|en|to|tre|
+
 ![Example Image](images/perlin_moire.png)
 
 ## Objective
