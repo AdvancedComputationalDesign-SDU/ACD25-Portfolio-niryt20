@@ -12,12 +12,13 @@ Note: This script is intended to be used within Grasshopper's Python
 scripting component.
 """
 
-# -----------------------------------------------------------------------------
-# Imports (extend as needed)
-# -----------------------------------------------------------------------------
-import rhinoscriptsyntax as rs
+## Libraries
 import numpy as np
-
+import Rhino.Geometry as rg
+import ghpythonlib.treehelpers as th
+import rhinoscriptsyntax as rs
+import math
+import random
 
 # -----------------------------------------------------------------------------
 # 1. Heightmap Generation
