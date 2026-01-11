@@ -1,13 +1,12 @@
 """
 Assignment 4: Agent-Based Model for Surface Panelization
 
-Author: Your Name
+Author: Nikolaj Rytter
 
-Surface Generator Template
+Surface Generator
 
 Description:
-This file defines the structural outline for generating or preprocessing
-surfaces and geometric signal fields for Assignment 4.
+This code generates a surface
 
 Note: This script is intended to be used within Grasshopper's Python
 scripting component.
