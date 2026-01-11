@@ -95,7 +95,7 @@ class Agent:
         self.local_curvature = rs.SurfaceCurvature(self.srf, (scaled_u, scaled_v))[6]
 
 
-# Factory for creating agents
+## Factory for creating agents
 
 def build_agents(srf, num_agents):
     agents = []
@@ -106,3 +106,9 @@ def build_agents(srf, num_agents):
         ag = Agent(srf, point)
         agents.append(ag)
     return agents
+
+##Agent Storage
+if reset or "agents" not in sc.sticky:
+    sc.sticky["agents"] = build_agents(srf, N)
+
+agents = sc.sticky["agents"]
