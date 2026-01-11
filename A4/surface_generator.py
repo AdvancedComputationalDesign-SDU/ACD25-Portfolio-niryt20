@@ -89,3 +89,18 @@ def surface_from_point_grid(point_grid):
 
     srf_id = rs.AddSrfPtGrid((rows, cols), flat_points)
     return srf_id
+
+# UV grid
+U_grid, V_grid = uv_grid(dU, dV)
+
+# heightmap
+a = heightmap(U_grid, V_grid, amp, frq, pha)
+
+# grid of points
+pts = make_point_grid_xy(dU, dV, O, S)
+
+# moving grid points along z
+pts_moved = move_along_z(pts)
+
+# surface from moved points
+srf = surface_from_point_grid(pts_moved)
