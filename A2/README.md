@@ -65,7 +65,7 @@ While the branching or growth approach can be inspired by L-systems, it does not
     - Draw lines
     - Draw Attractor point
 
-## Technical Explaination
+## Technical Explanation
 
 Python and shapely is used to create a recursive branching structure. Branch lengths and branch directions are influenced by spatial context. From a starting point, two branches are recursively generated until a set number of recursion depth is reached. At each step, branch direction is influenced by proximity to an attractor point and a universel set starting angle. The directional bias is computed from a vector pointing from branch endpoint towards the attractor point and the attraction force is scaled by a user defined attractor point factor. Branch length is controlled by distance to the attractor point and a user defined falloff factor. The resulting line segments are stored and used as a basis for subsequent recursive calls.
 

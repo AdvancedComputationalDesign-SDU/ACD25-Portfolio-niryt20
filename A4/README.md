@@ -103,7 +103,7 @@ for each agent:
 ### save updated agents
 sticky["agents"] = agents
 
-## Technical Explaination
+## Technical Explanation
 
 dist(self, agent)
     returns distance between self and another agent weighted by surface curvature
@@ -169,6 +169,37 @@ for each agent:
             add point to TrailPoints
 
 sc.sticky["agents"] = agents saves modified agents
+
+## Design Variations
+
+### Variation 1: [Name/Description]
+![Variation 1](images/Design_1.gif)
+![Variation image 1](images/Design_1.jpeg)
+
+- **Number of agents = 100**
+- **Separation force intensity = 0.005**
+- **Neighbor Count = 3**
+- **Seed = 42**
+
+### Variation 2: [Name/Description]
+
+![Variation 2](images/Design_2.gif)
+![Variation image 2](images/Design_2.jpeg)
+- **Number of agents = 100**
+- **Separation force intensity = 0.005**
+- **Neighbor Count = 10**
+- **Seed = 42**
+
+
+### Variation 3: [Name/Description]
+
+![Variation 3](images/Design_3.gif)
+![Variation image 3](images/Design_3.jpeg)
+- **Number of agents = 50**
+- **Separation force intensity = 0.01**
+- **Neighbor Count = 3**
+- **Seed = 42**
+
 
 ## Repository Structure
 
