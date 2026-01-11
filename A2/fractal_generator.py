@@ -24,3 +24,12 @@ length_factor = 0.5
 attractor = Point(-2, 2)
 attractor_strength = 0.1
 
+## Function for rotating a given vector
+def rotate_vector(v, angle_deg):
+    angle_red = math.radians(angle_deg)
+    x, y = v
+    xr = x * math.cos(angle_rad) - y * math.sin(angle_rad)
+    yr = x * math.sin(angle_rad) + y * math.cos(angle_rad)
+    return (xr, yr)
+
+   
