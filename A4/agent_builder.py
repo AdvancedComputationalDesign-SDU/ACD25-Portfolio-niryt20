@@ -1,27 +1,25 @@
 """
 Assignment 4: Agent-Based Model for Surface Panelization
 
-Author: Your Name
+Author: Nikolaj Rytter
 
-Agent Builder Template
+Agent Builder and simulator
 
 Description:
 Defines the core Agent class and factory methods for constructing an
 agent-based system. Provides a high-level OOP structure for sensing,
-decision-making, and movement, along with a stateful Grasshopper
-GH_ScriptInstance example.
+decision-making. 
 
-Note: This script is intended to be used within Grasshopper's Python
-scripting component.
+Note: Both agent builder and simulator is part of the same grasshopper component. therfore agent_simulator is empty.
+This script is intended to be used within Grasshopper's Python scripting component.
 """
 
-
-# -----------------------------------------------------------------------------
-# Imports (extend as needed)
-# -----------------------------------------------------------------------------
+## Imported libraries
+import scriptcontext as sc
 import rhinoscriptsyntax as rs
 import random
 import numpy as np
+import Rhino.Geometry as rg
 
 
 # -----------------------------------------------------------------------------
