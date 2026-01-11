@@ -122,3 +122,40 @@ for ag in agents:
     ag.update()
     ag.check_if_dead()
 
+## Visualization (in grasshopper)
+
+P = []           # live agent positions
+T = []           # ALL trails (alive & dead)
+TrailPoints = [] # flattened points
+SlopeValues = []
+
+vertical = rg.Vector3d(0, 0, 1)
+
+for ag in agents:
+
+    if ag.alive:
+        u = ag.Position[0] * rs.SurfaceDomain(srf, 0)[1]
+        v = ag.Position[1] * rs.SurfaceDomain(srf, 1)[1]
+        pt3d = rs.EvaluateSurface(srf, u, v)
+        P.append(pt3d)
+
+    
+    if len(ag.point) > 1:
+        poly = rg.Polyline(ag.point)
+        T.append(rg.PolylineCurve(poly))
+
+        for p in ag.point:
+            TrailPoints.append(p)
+
+            uv = rs.SurfaceClosestPoint(srf, p)
+            if uv:
+                normal = rs.SurfaceNormal(srf, uv)
+                if normal:
+                    angle = rg.Vector3d.VectorAngle(normal, vertical)
+                    SlopeValues.append(angle)
+                else:
+                    SlopeValues.append(0.0)
+            else:
+                SlopeValues.append(0.0)
+
+sc.sticky["agents"] = agents
