@@ -141,19 +141,3 @@ The structural branches are recursively generated from anchor points. Each itera
 ## References and AI Acknowledgments
 Branching structure youtube video
 https://www.youtube.com/watch?v=wV6W69b-l7w&t=1345s
-
-## Repository Structure
-
-```
-A3/
-├── index.md                    # Do not edit front matter or content
-├── README.md                   # Project documentation; Keep front matter, replace the rest with your project documentation
-├── BRIEF.md                    # Assignment brief; Do not edit front matter or content
-├── parametric_canopy.py        # Your code implementation
-├── parametric_canopy.gh        # Your grasshopper definition
-└── images/                     # Add diagram, intermediary, and final images here
-    ├── canopy.png              # Assignment brief image; Do not delete
-    └── ...
-```
-
----
