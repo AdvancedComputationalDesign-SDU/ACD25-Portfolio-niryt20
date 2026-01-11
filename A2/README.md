@@ -136,9 +136,10 @@ Branch geometry is influenced by an attractor point that pulls branch direction 
 ## References
 
 Video on recursive brancing structure
-
 https://www.youtube.com/watch?v=wV6W69b-l7w
 
+ACD course material
+
 ### ChatGPT
-Normalizing vectors for smoother directional bias 
-Resolving issues with incompatible list structures
+Normalizing vectors for smoother directional bias, 
+Resolving issues with incompatible list structures, Debugging, Ensure minimum branch length.
