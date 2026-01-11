@@ -15,6 +15,9 @@ from shapely.geometry import LineString, Point
 ## Number of generations
 gen = 5
 
+## Initial branching angle
+ini_angle = 15
+
 ## Branch length generation parameters
 max_length = 1.5
 min_length = 0.3
@@ -54,10 +57,10 @@ def length_field(pt):
 
 def Grow(pt, v, g):
 
-    V1 = rotate_vector(v, -15)
+    V1 = rotate_vector(v, -ini_angle)
     pt1 = (pt[0] + V1[0]*L, pt[1] + V1[1]*L)
 
-    V2 = rotate_vector(v, 15)
+    V2 = rotate_vector(v, ini_angle)
     pt2 = (pt[0] + V2[0]*L, pt[1] + V2[1]*L)
 
     L1 = LineString([pt, pt1])
@@ -69,3 +72,16 @@ def Grow(pt, v, g):
     Grow(pt1, V1, g + 1)
     Grow(pt2, V2, g + 1)
 
+## Visualization
+fig, ax = plt.subplots()
+
+for line in Lines:
+    x, y = line.xy
+    ax.plot(x, y, color='green', linewidth=1)
+
+# Attractor
+ax.scatter(attractor.x, attractor.y, color='red')
+
+ax.set_aspect('equal')
+plt.axis('off')
+plt.show()
