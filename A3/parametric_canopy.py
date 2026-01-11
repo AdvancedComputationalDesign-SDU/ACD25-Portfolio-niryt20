@@ -232,3 +232,9 @@ mesh = tri_mesh_from_points(pts_grid_UV)
 
 # Anchor points from boundingbox    
 a_pts = boundingbox_anchor_pts(mesh)
+
+## Branching from anchorpoints
+for A in a_pts:
+    B = rs.PointAdd(A, rs.VectorScale(V, L))
+    Lines.append(rs.AddLine(A, B))
+    Grow(B, V, L, 0)
