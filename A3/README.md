@@ -138,7 +138,9 @@ The structural branches are recursively generated from anchor points. Each itera
 ![Design C Branch](images/CBranch.png)
 ![Design C Canopy](images/CCanopy.png)
 
-
+## References and AI Acknowledgments
+Branching structure youtube video
+https://www.youtube.com/watch?v=wV6W69b-l7w&t=1345s
 
 ## Repository Structure
 
