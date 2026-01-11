@@ -1,57 +1,68 @@
-# Assignment 1: NumPy Array Manipulation for 2D Pattern Generation
+"""
+Assignment 1: Pattern Generator
 
-# Instructions:
-# - Write your code to generate patterns using NumPy.
-# - Use comments to explain your logic and the methods you're using.
-# - Feel free to be creative and explore different techniques.
+Author: Nikolaj Rytter
 
+Description:
+This script generates sin wave interference patterns using NumPy Arrays.
+"""
+
+## Importing numpy libraries
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Initialize your canvas (e.g., a 2D array filled with zeros)
-# You can adjust the size as needed
-canvas_height = 100  # Modify as desired
-canvas_width = 100   # Modify as desired
-canvas = np.zeros((canvas_height, canvas_width))
+## Seed
+np.random.seed(1)
 
-# Apply array manipulations to create a pattern
-# Suggestions:
-# - Use slicing and indexing to create stripes or checkerboards
-# - Use mathematical functions to create gradients
-# - Combine multiple patterns
+## Sin function frequency
+# Frequency parameter (1.0 to 4.0)
+f_p = 1.5
 
-# Example (you can modify or remove this):
-# Create horizontal stripes
-# for i in range(0, canvas_height, 20):
-#     canvas[i:i+10, :] = 255  # Assign a value to create a stripe
+ff = (1/(f_p*3.14))
 
-# Introduce randomness to add variability
-# Suggestions:
-# - Use np.random functions to add noise
-# - Randomly change pixel values within certain regions
+## Number of attractor points
+attr_n = 7
 
-# Example:
-# noise = np.random.randint(0, 50, (canvas_height, canvas_width))
-# canvas = canvas + noise
+## Canvas dimensions
+width = 200
+height = 200
 
-# Work with RGB channels
-# Convert your 2D canvas to a 3D array for RGB representation
-# Assign different colors to different parts of your pattern
+## Setting up the canvas
+canvas = np.zeros((height, width, 3)) 
 
-# Example:
-# canvas_rgb = np.stack((canvas, canvas, canvas), axis=2)
+## Creating a given number of random attractor points
+attractors = np.random.random((attr_n, 2)) * 200
 
-# Assign colors
-# canvas_rgb[:, :, 0] = 255  # Modify the red channel
-# canvas_rgb[:, :, 1] = canvas_rgb[:, :, 1] * 0.5  # Modify the green channel
+## Defining function for euclidean distance
+def distance(point1, point2):
+    return np.sqrt(np.sum((point1 - point2) ** 2, axis=1))
 
-# Ensure your array values are within the valid range (0-255)
-# canvas_rgb = np.clip(canvas_rgb, 0, 255)
+## A loop, distance check for each pixel, convertions to sin function and coloring the canvas
+for x in range(width):
+    for y in range(height):
+        # Calculating distance from pixel to all attractors
+        dists = distance(np.array([x, y]), attractors)
 
-# Visualize and save your image
-# plt.imshow(canvas_rgb.astype(np.uint8))
-# plt.axis('off')  # Hide axis
-# plt.show()
+        #Sin function for distance
+        s = np.sin(dists*ff)
 
-# Save the image to the images folder
-# plt.savefig('images/pattern_example.png', bbox_inches='tight', pad_inches=0)
+        # Summation of the sine of distances to get interference
+        s = np.array(s)
+
+        ss = sum(s)
+
+        # RGB channels, normalized
+        r = (np.sin(ss) + 1) / 2
+        g = (np.cos(ss) + 1) / 2
+        b = (np.mean(dists) / np.max(dists))
+
+        # Updating the canvas with final summed values
+        canvas[y, x, 0] = r
+        canvas[y, x, 1] = g
+        canvas[y, x, 2] = b
+
+## Visualization
+plt.imshow(canvas)
+plt.axis('off') 
+plt.show() 
+

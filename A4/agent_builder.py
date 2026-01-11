@@ -1,106 +1,161 @@
 """
 Assignment 4: Agent-Based Model for Surface Panelization
 
-Author: Your Name
+Author: Nikolaj Rytter
 
-Agent Builder Template
+Agent Builder and simulator
 
 Description:
 Defines the core Agent class and factory methods for constructing an
 agent-based system. Provides a high-level OOP structure for sensing,
-decision-making, and movement, along with a stateful Grasshopper
-GH_ScriptInstance example.
+decision-making. 
 
-Note: This script is intended to be used within Grasshopper's Python
-scripting component.
+Note: Both agent builder and simulator is part of the same grasshopper component. therfore agent_simulator is empty.
+This script is intended to be used within Grasshopper's Python scripting component.
 """
 
-
-# -----------------------------------------------------------------------------
-# Imports (extend as needed)
-# -----------------------------------------------------------------------------
+## Imported libraries
+import scriptcontext as sc
 import rhinoscriptsyntax as rs
 import random
 import numpy as np
+import Rhino.Geometry as rg
 
 
-# -----------------------------------------------------------------------------
-# Utility functions (optional)
-# -----------------------------------------------------------------------------
-def seed_everything(seed):
-    """Set random seeds for reproducibility."""
-    if seed is not None:
-        random.seed(seed)
-        np.random.seed(seed)
-
-seed_everything(42)
-
-# -----------------------------------------------------------------------------
-# Core agent class
-# -----------------------------------------------------------------------------
+## Core agent class
 class Agent:
-    """Represents a single agent with position, velocity, and state."""
+    def __init__(self, srf, position):
+        self.Position = position
+        self.velocity = [0, 0, 0]
+        self.srf = srf
+        self.local_curvature = 1
+        self.point = []
+        self.alive = True
 
-    def __init__(self, position, velocity):
-        """
-        Initialize the agent with position and velocity.
-        """
-        self.position = position
-        self.velocity = velocity
-        # TODO: Add any other attributes you need (e.g., id, age, type, etc.).
+    def dist(self, agent):
+        curvature_factor = np.interp(agent.local_curvature, [-0.015, 0.015], [1, 5])
+        return rs.Distance(self.Position, agent.Position) * curvature_factor
+    
+    def sorted_neighbors(self, agents):
+        return sorted(agents, key=self.dist)
+    
+    def separation(self, agents, force_intensity, n):
+        self.velocity = [0, 0, 0]
+        sorted_neighbors = self.sorted_neighbors(agents)
 
-    def sense(self, signals):
-        """Read environmental signals relevant to the agent."""
-        # TODO: Implement sensing logic based on your chosen signals.
-        pass
+        for i in range(min(n, len(sorted_neighbors))):
+            agent = sorted_neighbors[i]
+            if agent == self:
+                continue
 
-    def decide(self):
-        """Decide on actions based on sensed information."""
-        # TODO: Implement decision rules.
-        pass
+            distance_vec = rs.VectorCreate(self.Position, agent.Position)
+            if rs.VectorLength(distance_vec) == 0:
+                distance_vec = [random.uniform(-1, 1),
+                                random.uniform(-1, 1),
+                                0]
 
-    def move(self):
-        """Update position according to velocity and rules."""
-        # TODO: Implement movement logic.
-        pass
+            inverse_dist = np.interp(
+                rs.VectorLength(distance_vec),
+                [0, 1],
+                [force_intensity, 0]
+            )
 
-    def update(self, agents):
-        """Perform one update cycle: sense, decide, and move."""
-        # TODO: Call sense / decide / move here, or structure as you prefer.
-        pass
+            inverse_distance_vec = rs.VectorUnitize(distance_vec)
+            inverse_distance_vec = rs.VectorScale(inverse_distance_vec, inverse_dist)
+
+            self.velocity = rs.VectorAdd(self.velocity, inverse_distance_vec)
+
+    def check_if_dead(self):
+        u, v = self.Position[0], self.Position[1]
+
+        if u <= 0 or u >= 1 or v <= 0 or v >= 1:
+            self.alive = False
+
+    def update(self):
+
+        if not self.alive:
+            return 
+
+        # Move in UV (0-1)
+        self.Position = rs.VectorAdd(self.Position, self.velocity)
+        self.Position = np.clip(list(self.Position), 0, 1).tolist()
+
+        # Convert UV→3D and store in point
+        scaled_u = self.Position[0] * rs.SurfaceDomain(self.srf, 0)[1]
+        scaled_v = self.Position[1] * rs.SurfaceDomain(self.srf, 1)[1]
+
+        pt3d = rs.EvaluateSurface(self.srf, scaled_u, scaled_v)
+
+        # Store the point
+        self.point.append(pt3d)
+
+        # Update curvature at new spot
+        scaled_u = self.Position[0] * rs.SurfaceDomain(self.srf, 0)[1]
+        scaled_v = self.Position[1] * rs.SurfaceDomain(self.srf, 1)[1]
+        self.local_curvature = rs.SurfaceCurvature(self.srf, (scaled_u, scaled_v))[6]
 
 
-# -----------------------------------------------------------------------------
-# Factory for creating agents
-# -----------------------------------------------------------------------------
-def build_agents(num_agents, initial_data=None):
-    """Create and initialize a list of Agent instances."""
-    # TODO: Implement build_agents(...) based on your design.
-    raise NotImplementedError("Implement build_agents(...) based on your design.")
+## Factory for creating agents
 
+def build_agents(srf, num_agents):
+    agents = []
+    for _ in range(num_agents):
+        u = random.uniform(0, 1)
+        v = random.uniform(0, 1)
+        point = [u, v]
+        ag = Agent(srf, point)
+        agents.append(ag)
+    return agents
 
-# -----------------------------------------------------------------------------
-# Grasshopper script instance (structural placeholder)
-# -----------------------------------------------------------------------------
-"""Example container for managing agent state in Grasshopper.
+##Agent Storage
+if reset or "agents" not in sc.sticky:
+    sc.sticky["agents"] = build_agents(srf, N)
 
-Use this class to maintain and update agents between recomputations.
-"""
+agents = sc.sticky["agents"]
 
-class MyComponent(Grasshopper.Kernel.GH_ScriptInstance):
-    """Manages persistent agent list across Grasshopper runs."""
+## agent simulation tick updates
+for ag in agents:
+    if ag.alive:
+        ag.separation(agents, force_intensity, neighbor_count)
 
-    def RunScript(self, N:int, reset:bool):
-        """
-        Main entry point called by Grasshopper.
+for ag in agents:
+    ag.update()
+    ag.check_if_dead()
 
-        Parameters
-        ----------
-        N : int
-            Number of agents.
-        reset : bool
-            When True, reinitialize agents.
-        """
-        if reset or not hasattr(self, "agents"):
-            self.agents = build_agents(N)
-        return self
+## Visualization (in grasshopper)
+
+P = []           # live agent positions
+T = []           # ALL trails (alive & dead)
+TrailPoints = [] # flattened points
+SlopeValues = []
+
+vertical = rg.Vector3d(0, 0, 1)
+
+for ag in agents:
+
+    if ag.alive:
+        u = ag.Position[0] * rs.SurfaceDomain(srf, 0)[1]
+        v = ag.Position[1] * rs.SurfaceDomain(srf, 1)[1]
+        pt3d = rs.EvaluateSurface(srf, u, v)
+        P.append(pt3d)
+
+    
+    if len(ag.point) > 1:
+        poly = rg.Polyline(ag.point)
+        T.append(rg.PolylineCurve(poly))
+
+        for p in ag.point:
+            TrailPoints.append(p)
+
+            uv = rs.SurfaceClosestPoint(srf, p)
+            if uv:
+                normal = rs.SurfaceNormal(srf, uv)
+                if normal:
+                    angle = rg.Vector3d.VectorAngle(normal, vertical)
+                    SlopeValues.append(angle)
+                else:
+                    SlopeValues.append(0.0)
+            else:
+                SlopeValues.append(0.0)
+
+sc.sticky["agents"] = agents
