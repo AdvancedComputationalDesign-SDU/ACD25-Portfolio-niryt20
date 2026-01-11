@@ -205,22 +205,3 @@ Visualization
 
 ## References
 W10 and W11 ACD material.
-
-
-## Repository Structure
-
-```
-A4/
-├── index.md                    # Do not edit front matter or content
-├── README.md                   # Project documentation; Keep front matter, replace the rest with your project documentation
-├── BRIEF.md                    # Assignment brief; Do not edit front matter or content
-├── agent_panelization.gh       # Your grasshopper definition
-├── surface_generator.py        # Your surface_generator implementation
-├── agent_builder.py            # Your agent_builder implementation
-├── agent_simulator.py          # Your agent_simulator implementation
-├── ...                         # Any additional implementation
-└── images/                     # Add diagram, intermediary, and final images here
-    ├── agent_based.png         # Assignment brief image; Do not delete
-    └── ...
-```
----
