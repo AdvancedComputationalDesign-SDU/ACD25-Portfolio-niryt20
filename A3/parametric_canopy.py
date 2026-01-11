@@ -54,7 +54,7 @@ def uv_grid(divU, divV):
 
     return U, V
 
-## heightmap
+## Heightmap
 def heightmap(U, V, amplitude, frequency, phase):
 
     # sine wave
@@ -67,3 +67,26 @@ def heightmap(U, V, amplitude, frequency, phase):
     H = amplitude * (random.uniform(0.0,1.0)*wave + random.uniform(0.0,1.0)*ridges)
 
     return H
+
+## Rectangular grid of points
+def make_point_grid_xy(divU, divV, origin, size):
+
+    ox, oy, oz = origin
+    sx, sy = size
+
+    step_u = 1.0 / (divU - 1) if divU > 1 else 0
+    step_v = 1.0 / (divV - 1) if divV > 1 else 0
+
+    grid = []
+    for j in range(int(divV)):
+        v = j * step_v
+        row = []
+        for i in range(int(divU)):
+            u = i * step_u
+
+            x = ox + u * sx
+            y = oy + v * sy
+            row.append((x, y, oz))
+        grid.append(row)
+
+    return grid
