@@ -179,23 +179,12 @@ sc.sticky["agents"] = agents saves modified agents
 
 ![Variation 1](images/Design_1.gif)
 
-- **Number of agents = 100**
-- **Separation force intensity = 0.005**
-- **Neighbor Count = 3**
-- **Seed = 42**
-
 ### Variation 2
 |Number of agents|Separation force intensity|Neighbor count|Seed|
 |----|----|----|----|
 |100|0.005|10|42|
 
 ![Variation 2](images/Design_2.gif)
-
-- **Number of agents = 100**
-- **Separation force intensity = 0.005**
-- **Neighbor Count = 10**
-- **Seed = 42**
-
 
 ### Variation 3
 |Number of agents|Separation force intensity|Neighbor count|Seed|
@@ -204,10 +193,19 @@ sc.sticky["agents"] = agents saves modified agents
 
 ![Variation 3](images/Design_3.gif)
 
-- **Number of agents = 50**
-- **Separation force intensity = 0.01**
-- **Neighbor Count = 3**
-- **Seed = 42**
+## AI Acknowledgments
+
+ChatGPT
+# -----------------------------------------------------------------------------
+# Agent Storage: storing information between tics and storing agents paths was difficult. ChatGPT suggested using sticky, when promted
+# -----------------------------------------------------------------------------
+if reset or "agents" not in sc.sticky:
+    sc.sticky["agents"] = build_agents(srf, N)
+
+# -----------------------------------------------------------------------------
+# Visualization
+# -----------------------------------------------------------------------------
+Translating data from inside a python component into something visible in the grasshopper environment. Via ChatGPT
 
 
 ## Repository Structure
