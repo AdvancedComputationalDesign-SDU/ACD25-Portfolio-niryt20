@@ -53,3 +53,17 @@ def uv_grid(divU, divV):
     U, V = np.meshgrid(u, v)
 
     return U, V
+
+## heightmap
+def heightmap(U, V, amplitude, frequency, phase):
+
+    # sine wave
+    wave = np.sin((U * frequency + phase) * 2 * np.pi) * np.cos((V * frequency + phase) * 2 * np.pi)
+
+    # sine ridges 
+    ridges = np.abs(np.sin(5 * U * np.pi)) * 0.5
+
+    # combining waves
+    H = amplitude * (random.uniform(0.0,1.0)*wave + random.uniform(0.0,1.0)*ridges)
+
+    return H
