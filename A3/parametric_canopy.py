@@ -156,3 +156,33 @@ def tri_mesh_from_points(pts):
     mesh = rs.AddMesh(vertices, faces)
     return mesh
 
+## Branching structure
+def Grow(pt, v, length, g):
+    if g >= gen:
+        return
+
+    plane = rs.PlaneFromNormal(pt, v)
+    random_pt = rs.EvaluatePlane(plane, [random.uniform(-1, 1), random.uniform(-1, 1)])
+    rot_axis = rs.VectorCreate(random_pt, pt)
+
+    V1 = rs.VectorRotate(v, random.uniform(-angle,0), rot_axis)
+    pt1 = rs.PointAdd(pt, rs.VectorScale(V1, length))
+
+    if g + 1 == gen:
+        pt1 = rs.MeshClosestPoint(mesh, pt1)[0]
+
+    L1 = rs.AddLine(pt, pt1)
+    Lines.append(L1)
+
+    Grow(pt1, V1, length * random.uniform(0.75,0.95), g+1)
+
+    V2 = rs.VectorRotate(v, random.uniform(0,angle), rot_axis)
+    pt2 = rs.PointAdd(pt, rs.VectorScale(V2, length))
+
+    if g + 1 == gen:
+        pt2 = rs.MeshClosestPoint(mesh, pt2)[0]
+
+    L2 = rs.AddLine(pt, pt2)
+    Lines.append(L2)
+
+    Grow(pt2, V2, length * random.uniform(0.75,0.95), g+1)
