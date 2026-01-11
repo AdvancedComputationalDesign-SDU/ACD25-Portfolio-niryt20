@@ -11,3 +11,36 @@ import ghpythonlib.treehelpers as th
 import rhinoscriptsyntax as rs
 import math
 import random
+
+## function for anchor points using rs.BoundingBox
+def boundingbox_anchor_pts(mesh):
+    pts8 = rs.BoundingBox(mesh)
+    pts4 = pts8[-4:]
+
+    out_pts = []
+    for pts0 in pts4:
+        out_pts.append(rg.Point3d(pts0.X, pts0.Y, 0))
+    
+    x = sum([pt.X for pt in out_pts]) / 4.0
+    y = sum([pt.Y for pt in out_pts]) / 4.0
+    z = sum([pt.Z for pt in out_pts]) / 4.0
+
+    bounds_center = rg.Point3d(x, y, z)
+
+    anchor_pts = []
+
+    angle_rad = math.radians(anchor_rot_angle)
+    rot = rg.Transform.Rotation(angle_rad, bounds_center)
+
+    for pt in out_pts:
+        v_anchor_center = pt - bounds_center
+    
+        v_scaled = v_anchor_center * anchor_scale
+    
+        moved_pt = bounds_center + v_scaled
+    
+        moved_pt_rot = moved_pt
+        moved_pt_rot.Transform(rot)
+    
+        anchor_pts.append(moved_pt_rot)
+    return (anchor_pts)
