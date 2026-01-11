@@ -23,7 +23,76 @@ search_exclude: false
 
 In this assignment you will design and generate a **parametric structural canopy** in **Grasshopper** using the **GhPython (Python 3)** component. You will combine: (1) a **NumPy-driven heightmap** that modulates a NURBS surface, (2) **tessellation** of the resulting surface, and (3) **recursive, branching vertical supports** with controlled randomness. Your goal is to produce a small **family of design solutions** by varying parameters and algorithms, then communicate your process and results in a clear, reproducible report. You are asked to present **three** visually distinct designs. Each design must vary at least **two** of the implemented computational logic (heightmap-based surface geometry, tessellation strategy, branching supports).
 
+## Pseudo-Code
 
+`boundingbox_anchor_pts(mesh)`
+    rs.BoundingBox(mesh) to get 4 appropriate anchorpoints
+    loop through each anchor point, average coordinates to get a center point
+    rg.Transform.Rotation(angle, center point) rotates anchorpoints around center point
+returns anchor points
+
+`heightmap(U, V, amplitude, frequency, phase)`
+    np.sin wave in U direction
+    np.cos wave in V direction
+
+    addition of simple np.sin ridges parallel to V
+returns height values in numpy array shaped as U,V
+
+`make_point_grid_xy(divU, divV, origin, size)`
+    1/(divU divV) normalized distance between points
+
+    loops through normalized spacing, multiply by grid size to get real x, y coordinates
+returns grid of points
+
+`move_along_z(grid of points)`
+    loops through each point 
+        add heightmap value to z coordinate
+returns moved grid of points
+
+`surface_from_point_grid(moved grid of points)`
+    loops through moved grid of points
+        flatten data structure
+    retruns flattened list of points
+
+    rs.AddSrfPtGrid(data structure information ,flattened list of points) generates a surface from moved grid of points
+returns surface
+
+`sample_uniform_grid(surface, U, V)`
+    rs.SurfaceDomain obtains start and end domains in U and V direction
+    i/(U and V) for U and V + 1 produces evenly spaced U and V parameters
+        returns lists of evenly spaved U and V parameters
+    
+    loops through U and V parameter
+        rs.EvaluateSurface returns 3d points for the given U and V coordinate
+returns grid of surface points
+
+`tri_mesh_from_points(grid of surface points)`
+    vertices = [pts[i][j] for i in range(rows) for j in range (cols)] devolves datastructure into a 1d list
+    for each quad cell in grid of surface points
+        a = i * vcols + j
+        b = a + 1
+        c = b + vcols
+        d = c - 1
+
+        creates two triangle cells via
+            faces.append([a, b, c])
+            faces.append([a, d, c])
+    rs.AddMesh constructs a mesh from the list of vertices and the triangular faces
+returns mesh
+
+`Grow(starting point, starting direction, length, number of generations)`
+    rs.PlaneFromNormal to generate a plane with current direction as the normal
+    rs.EvaluatePlane generates a random point on plane for rotation
+    rs.VectorCreate creates the current rotation axis
+    rs.MeshClosestPoint locates closest point on mesh from branch
+        at last gen - generates branch from endpoint to mesh
+
+    for A in a_pts:
+        B = rs.PointAdd(A, rs.VectorScale(V, L))
+        Lines.append(rs.AddLine(A, B))
+        Grow(B, V, L, 0)
+    loop through each anchor point
+returns list of lines
 
 ---
 
