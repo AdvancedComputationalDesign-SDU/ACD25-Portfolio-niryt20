@@ -67,3 +67,14 @@ def make_point_grid_xy(divU, divV, origin, size):
         grid.append(row)
 
     return grid
+
+## Moving along z based on heightmap
+def move_along_z(pts):
+    pts_moved = [
+        [
+            (x, y, float(z + a[i, j]))
+            for j, (x, y, z) in enumerate(row)
+        ]
+    for i, row in enumerate(pts)
+    ]
+    return pts_moved
