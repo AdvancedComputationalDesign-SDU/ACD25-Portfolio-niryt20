@@ -206,3 +206,29 @@ S = (sizex,sizey)
 #Branching input
 V = [0,0,1]
 Lines = []
+
+###Run Functions###
+
+# UV grid
+U_grid, V_grid = uv_grid(dU, dV)
+
+# Heightmap
+a = heightmap(U_grid, V_grid, amp, frq, pha)
+
+# Grid of points
+pts = make_point_grid_xy(dU, dV, O, S)
+
+# Moving grid points along z
+pts_moved = move_along_z(pts)
+
+# Surface from moved points
+srf = surface_from_point_grid(pts_moved)
+
+# Surface sampling
+pts_grid_UV = sample_uniform_grid(srf, U1, V1)
+
+# Creating tri meshes
+mesh = tri_mesh_from_points(pts_grid_UV)
+
+# Anchor points from boundingbox    
+a_pts = boundingbox_anchor_pts(mesh)
