@@ -69,7 +69,7 @@ if reset pressed OR no agent list exists:
 
 agents = sticky["agents"]
 
-### simulation
+### Simulation
 for each agent in agents:
     if alive:
         agent.separation(agents, force_intensity, neighbor_count)
@@ -100,7 +100,7 @@ for each agent:
             add slope to SlopeValues
             add point to TrailPoints
 
-### save updated agents
+### Save updated agents
 sticky["agents"] = agents
 
 ## Technical Explanation
