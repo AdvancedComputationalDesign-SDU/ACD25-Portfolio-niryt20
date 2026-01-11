@@ -186,3 +186,23 @@ def Grow(pt, v, length, g):
     Lines.append(L2)
 
     Grow(pt2, V2, length * random.uniform(0.75,0.95), g+1)
+
+##Inputs
+
+#U and V
+dU = int(dU)
+dV = int(dV)
+
+U1 = int(U1)
+V1 = int(V1)
+
+#Seed
+random.seed(seed)
+
+#Size and origin of canopy
+O = (orix,oriy,oriz)
+S = (sizex,sizey)
+
+#Branching input
+V = [0,0,1]
+Lines = []
