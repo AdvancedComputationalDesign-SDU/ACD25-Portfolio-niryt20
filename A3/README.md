@@ -103,9 +103,27 @@ To create the tesselation of the structural canopy, the surface obtained from th
 The structural branches are recursively generated from anchor points. Each iteration randomly rotates the current branch in 3d space. Last interation finds closest point on the canopy mesh and snaps onto it.
 
 ## Design Variation
+
+### Design A
 |dU|dV|amp|frq|pha|orix|oriy|oriz|sizex|sizey|anchor_rot_angle|anchor_scale|gen|angle|L|seed|U1|V1|
 |----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 |50|50|3|1|0.25|0|0|1|10|10|0|0.42|5|10|0.42|8|25|25|
+![Design A Branch](images/ABranch.png)
+![Design A Canopy](images/ACanopy.png)
+
+### Design B
+|dU|dV|amp|frq|pha|orix|oriy|oriz|sizex|sizey|anchor_rot_angle|anchor_scale|gen|angle|L|seed|U1|V1|
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|50|50|1|1|0.25|0|0|1|10|10|0|0.42|7|0.27|25|17|25|25|
+![Design B Branch](images/BBranch.png)
+![Design B Canopy](images/BCanopy.png)
+
+### Design C
+|dU|dV|amp|frq|pha|orix|oriy|oriz|sizex|sizey|anchor_rot_angle|anchor_scale|gen|angle|L|seed|U1|V1|
+|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|50|50|2|4|0.36|0|0|2|10|10|0|0.42|4|0.4|25|17|100|100|
+![Design C Branch](images/CBranch.png)
+![Design C Canopy](images/CCanopy.png)
 
 ## Repository Structure
 
