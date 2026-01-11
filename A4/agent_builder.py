@@ -112,3 +112,13 @@ if reset or "agents" not in sc.sticky:
     sc.sticky["agents"] = build_agents(srf, N)
 
 agents = sc.sticky["agents"]
+
+## agent simulation tick updates
+for ag in agents:
+    if ag.alive:
+        ag.separation(agents, force_intensity, neighbor_count)
+
+for ag in agents:
+    ag.update()
+    ag.check_if_dead()
+
