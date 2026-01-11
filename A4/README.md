@@ -11,7 +11,15 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
-![Example Structural Panelization](images/agent_based.jpg)
+## Table of Contents
+
+- [Objective](#objective)
+- [Project Overview](#project-overview)
+- [Pseudo-Code](#pseudo-code)
+- [Technical Explanation](#technical-explanation)
+- [Design Variations](#design-variations)
+- [AI Acknowledgments](#ai-acknowledgments)
+- [References](#references)
 
 ## Objective
 
