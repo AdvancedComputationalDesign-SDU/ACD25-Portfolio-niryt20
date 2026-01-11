@@ -94,6 +94,14 @@ returns mesh
     loop through each anchor point
 returns list of lines
 
+## Technical Explanation
+
+The structural canopy is based on a heightmap generated from simple sine and cosine wave functions combined with custom ridges along U direction. The Canopy is controlled with amplitude, frequency and phase inputs. Randomness is introduced with different weighted wave and ridge values for each heightmap generation.
+
+To create the tesselation of the structural canopy, the surface obtained from the heightmap is reparameterized and uniformly partitioned into a grid of points, each cell is divided into two triagular faces and a triangular mesh is made.
+
+The structural branches are recursively generated from anchor points. Each iteration randomly rotates the current branch in 3d space. Last interation finds closest point on the canopy mesh and snaps onto it.
+
 ---
 
 ## Repository Structure
