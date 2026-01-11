@@ -1,3 +1,12 @@
+"""
+Assignment 1: Pattern Generator
+
+Author: Nikolaj Rytter
+
+Description:
+This script generates sin wave interference patterns using NumPy Arrays.
+"""
+
 ## Importing numpy libraries
 import numpy as np
 import matplotlib.pyplot as plt
