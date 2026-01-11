@@ -47,3 +47,9 @@ def normalize(v):
 def step_length(g):
     return 1.0 * (0.7 ** g)
 
+## Length field based on distance from attractor point
+def length_field(pt):
+    d = math.hypot(pt[0] - attractor.x, pt[1] - attractor.y)
+    return max(MIN_LENGTH, MAX_LENGTH - FALLOFF * d)
+
+
