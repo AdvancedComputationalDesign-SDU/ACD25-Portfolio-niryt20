@@ -38,7 +38,12 @@ def rotate_vector(v, angle_deg):
     yr = x * math.sin(angle_rad) + y * math.cos(angle_rad)
     return (xr, yr)
 
+## Normalize vectors
 def normalize(v):
     l = math.hypot(v[0], v[1])
     return (v[0]/l, v[1]/l)
+
+## Exponential decay of branch length
+def step_length(g):
+    return 1.0 * (0.7 ** g)
 
