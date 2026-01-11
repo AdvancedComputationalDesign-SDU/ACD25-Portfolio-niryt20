@@ -74,4 +74,8 @@ Branch geometry is influenced by an attractor point that pulls branch direction 
 
 ## Results
 
+|Number of Generations|Initial Angle|Length Factor|Attractor Point Coords|Attractor Strength|
+|----|----|----|----|----|
+|5|15 degrees|0.5|(-2,2)|0.5|
+
 ## References
