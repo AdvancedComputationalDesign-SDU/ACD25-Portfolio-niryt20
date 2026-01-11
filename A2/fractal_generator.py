@@ -33,6 +33,7 @@ V = (0, 1)
 
 ## List containing branch geometry
 Lines = []
+
 ## Function for rotating a given vector
 def rotate_vector(v, angle_deg):
     angle_rad = math.radians(angle_deg)
@@ -66,9 +67,10 @@ def Grow(pt, v, g):
         v = (v[0] + attractor_strength * to_attr[0], v[1] + attractor_strength * to_attr[1],)
 
         v = normalize(v)
+        L = length_field(pt)
 
         V1 = rotate_vector(v, -ini_angle)
-        pt1 = (pt[0] + V1[0]*L, pt[1] + V1[1]*L)
+        pt1 = (pt[0] + V1[0]*L, pt[1] + V1[1]*L)    
 
         V2 = rotate_vector(v, ini_angle)
         pt2 = (pt[0] + V2[0]*L, pt[1] + V2[1]*L)
