@@ -26,18 +26,37 @@ In this assignment you will implement a **recursive generator** and enrich it wi
 
 While the branching or growth approach can be inspired by L-systems, it does not have to be strictly L-system based. You are encouraged to explore recursive generation methods influenced by spatial constraints and geometric rules that govern how the fractal develops and interacts with its environment. This opens opportunities to experiment with recursive branching logic, adaptive scaling, and spatial modulation beyond formal grammar rewriting.
 
----
+## Pseudo-Code
 
-## Repository structure
+1. **Initialize Variables**
+   - Set canvas dimensions (height and width).
+   - Define color values.
+   - Set number of attractor points
 
-```
-A2/
-├── index.md                    # Do not edit front matter or content
-├── README.md                   # Project documentation; Keep front matter, replace the rest with your project documentation
-├── BRIEF.md                    # Assignment brief; Do not edit front matter or content
-├── fractal_generator.py        # Your code implementation
-└── images/                     # Add diagram, intermediary, and final images here
-    ├── branching.png           # Assignment brief image; Do not delete
-    └── ...
-```
----
+2. **Create Blank Canvas**
+   - Initialize a 2D NumPy array filled with zeros.
+
+3. **Generate Attractor Points**
+    -  Generate random attractor points within canvas dimensions
+
+4. **Define Distance Function**
+    - Compute euclidian distance to attractor point
+
+5. **Generate Pattern**
+    - **For** each pixel in canvas_
+        - Compute distance to attractor points
+        - Apply sine to distances
+        - Sum sine values
+        - Map normalized values to RGB channels
+        - Store values in canvas
+
+6. **Visualize Canvas as Image**
+    - matplotlib.pyplot as plt
+
+## Technical Explaination
+
+## Geometric Influences
+
+## Results
+
+## References
