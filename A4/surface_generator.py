@@ -78,3 +78,14 @@ def move_along_z(pts):
     for i, row in enumerate(pts)
     ]
     return pts_moved
+
+## Surface from moved points
+def surface_from_point_grid(point_grid):
+
+    rows = len(point_grid)
+    cols = len(point_grid[0])
+
+    flat_points = [pt for row in point_grid for pt in row]
+
+    srf_id = rs.AddSrfPtGrid((rows, cols), flat_points)
+    return srf_id
