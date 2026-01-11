@@ -32,7 +32,77 @@ Your implementation must incorporate **at least two types of geometric signals**
 - Heightmap from assignment 3
 - Movement of agents based on proximity of other agents and a curvature factor
 - Slope data is stored and agents generate visual representation of slope based on position on a given surface
----
+
+## Pseudo-Code
+
+### Agent Class
+class Agent
+    distance to other agents
+        curvature veight
+        returns distance weighted with curvature
+
+    sorted neighbors
+        returns a sorted list of neigboring agents
+
+    separation
+        Get N nearest neighboring agents
+        compute separation vector
+    
+    agent at edge check
+        if u,v = 0 or 1 kill agent
+    
+    move agent
+        position + velocity 
+
+### Build Agents
+ agents
+    empty list of agents
+    repeat:
+        random UV coordinate
+        create agent at coord
+        add to list of agents
+    return list of agents
+
+### Storage
+if reset pressed OR no agent list exists:
+    sticky["agents"] = build_agents(surface, N)
+
+agents = sticky["agents"]
+
+### simulation
+for each agent in agents:
+    if alive:
+        agent.separation(agents, force_intensity, neighbor_count)
+
+for each agent in agents:
+    agent.update()
+    agent.check_if_dead()
+
+### Visualitation
+
+P = live agent position
+T = trails polyline
+TrailPoints = trail points history
+SlopeValues = all empty lists
+
+for each agent:
+    
+    if agent.alive:
+        convert UV → XYZ
+        add to P
+    
+    if agent.trail has more than 1 point:
+        create polyline from trail
+        add to T
+
+        for each point in trail:
+            calculate slope from surface normal
+            add slope to SlopeValues
+            add point to TrailPoints
+
+### save updated agents
+sticky["agents"] = agents
+
 
 ## Repository Structure
 
