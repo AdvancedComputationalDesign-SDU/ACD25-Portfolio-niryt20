@@ -20,6 +20,9 @@ import rhinoscriptsyntax as rs
 import math
 import random
 
+O = (orix,oriy,oriz)
+S = (sizex,sizey)
+
 # -----------------------------------------------------------------------------
 # 1. Heightmap Generation
 # -----------------------------------------------------------------------------
