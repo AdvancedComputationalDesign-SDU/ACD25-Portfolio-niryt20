@@ -131,3 +131,28 @@ def sample_uniform_grid(surface, U, V):
         pts.append(row)
     
     return pts
+
+## Tri mesh from surface points
+def tri_mesh_from_points(pts):
+
+    rows = len(pts)
+    cols = len(pts[0])
+
+    vertices = [pts[i][j] for i in range(rows) for j in range (cols)]
+
+    faces = []
+    vcols = cols
+
+    for i in range(rows - 1):
+        for j in range(cols - 1):
+            a = i * vcols + j
+            b = a + 1
+            c = b + vcols
+            d = c - 1
+
+            faces.append([a, b, c])
+            faces.append([a, d, c])
+
+    mesh = rs.AddMesh(vertices, faces)
+    return mesh
+
