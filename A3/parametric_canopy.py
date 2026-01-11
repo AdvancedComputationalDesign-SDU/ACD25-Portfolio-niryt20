@@ -102,7 +102,7 @@ def move_along_z(pts):
     ]
     return pts_moved
 
-## surface from moved points
+## Surface from moved points
 def surface_from_point_grid(point_grid):
 
     rows = len(point_grid)
@@ -112,3 +112,22 @@ def surface_from_point_grid(point_grid):
 
     srf_id = rs.AddSrfPtGrid((rows, cols), flat_points)
     return srf_id
+
+## Uniform grid from srf
+def sample_uniform_grid(surface, U, V):
+    du0, du1 = rs.SurfaceDomain(surface, 0)
+    dv0, dv1 = rs.SurfaceDomain(surface, 1)
+
+    pu = [du0 + (du1 - du0)*(i/float(U)) for i in range (U+1)]
+    pv = [dv0 + (dv1 - dv0)*(i/float(V)) for i in range (V+1)]
+
+    pts = []
+
+    for u in pu:
+        row = []
+        for v in pv:
+            tmp_pt = rs.EvaluateSurface(surface, u, v)
+            row.append(tmp_pt)
+        pts.append(row)
+    
+    return pts
