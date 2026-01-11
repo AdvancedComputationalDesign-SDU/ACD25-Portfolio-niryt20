@@ -103,6 +103,72 @@ for each agent:
 ### save updated agents
 sticky["agents"] = agents
 
+## Technical Explaination
+
+dist(self, agent)
+    returns distance between self and another agent weighted by surface curvature
+        curvature is mapped between 1 = small curvature 5 = large curvature
+
+sorted_neighbors(self,agents)
+    returns a full sorted list of agents based on distance to self
+
+separation(self,agents,force_intensity, N)
+    resets velocity
+    Gather distance information on N nearby neighbors
+    loop over nearby agents, vector from self to agent, scale based on proximity(inversed to get bigger separation for small distances)
+
+check_if_dead(self)
+    Extract u,v from UV position.
+    If u or v hits the UV domain boundary (≤0 or ≥1) the agent is marked alive = False.
+    Effectively removes agents that reach surface edges.
+
+update(self)
+    per tick update that moves agent, stores trail points and updates curvature reading.
+
+
+build agents
+    for each agent
+        pick random UV coordinate
+        create agent
+    returns list of agents
+
+sc.sticky is a persistent dictionary across Grasshopper/Python component runs.
+
+If reset is True build new agents and store them in sticky.
+Then get agents from sticky — so subsequent component runs operate on the same agent list
+
+
+for ag in agents
+    for each alive agent compute separation from nearby agents
+
+for ag in agents
+    calls update() to move agent stores trail and checks of dead
+
+
+P = live agent position
+T = trails polyline
+TrailPoints = trail points history
+SlopeValues = all empty lists
+
+vertical vector (0,0,1) for slope reference to visualize in grasshopper
+
+
+for each agent:
+    
+    if agent.alive:
+        convert UV → XYZ
+        add to P
+    
+    if agent.trail has more than 1 point:
+        create polyline from trail
+        add to T
+
+        for each point in trail:
+            calculate slope from surface normal
+            add slope to SlopeValues
+            add point to TrailPoints
+
+sc.sticky["agents"] = agents saves modified agents
 
 ## Repository Structure
 
