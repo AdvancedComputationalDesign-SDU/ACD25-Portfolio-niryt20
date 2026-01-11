@@ -195,17 +195,16 @@ sc.sticky["agents"] = agents saves modified agents
 
 ## AI Acknowledgments
 
-ChatGPT
-# -----------------------------------------------------------------------------
-# Agent Storage: storing information between tics and storing agents paths was difficult. ChatGPT suggested using sticky, when promted
-# -----------------------------------------------------------------------------
-if reset or "agents" not in sc.sticky:
-    sc.sticky["agents"] = build_agents(srf, N)
+# ChatGPT
+Agent Storage: storing information between tics and storing agents' paths was difficult. ChatGPT suggested using sticky when promted.
 
-# -----------------------------------------------------------------------------
-# Visualization
-# -----------------------------------------------------------------------------
-Translating data from inside a python component into something visible in the grasshopper environment. Via ChatGPT
+- if reset or "agents" not in sc.sticky: sc.sticky["agents"] = build_agents(srf, N)
+
+Visualization
+- Translating data from inside a python component into something visible in the grasshopper environment often with ChatGPT
+
+## References
+W10 and W11 ACD material.
 
 
 ## Repository Structure
