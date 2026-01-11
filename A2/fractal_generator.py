@@ -50,6 +50,22 @@ def step_length(g):
 ## Length field based on distance from attractor point
 def length_field(pt):
     d = math.hypot(pt[0] - attractor.x, pt[1] - attractor.y)
-    return max(MIN_LENGTH, MAX_LENGTH - FALLOFF * d)
+    return max(min_length, max_length - length_factor * d)
 
+def Grow(pt, v, g):
+
+    V1 = rotate_vector(v, -15)
+    pt1 = (pt[0] + V1[0]*L, pt[1] + V1[1]*L)
+
+    V2 = rotate_vector(v, 15)
+    pt2 = (pt[0] + V2[0]*L, pt[1] + V2[1]*L)
+
+    L1 = LineString([pt, pt1])
+    L2 = LineString([pt, pt2])
+
+    Lines.append(L1)
+    Lines.append(L2)
+
+    Grow(pt1, V1, g + 1)
+    Grow(pt2, V2, g + 1)
 
