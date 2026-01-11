@@ -11,7 +11,14 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
-![Example Fractal](images/branching.png)
+## Table of Contents
+
+- [Objective](#Objective)
+- [Pseudo-Code](#pseudo-code)
+- [Technical Explanation](#technical-explanation)
+- [Geometric Influences](#Geometric-influences)
+- [Results](#results)
+- [References](#references)
 
 ## Objective
 
