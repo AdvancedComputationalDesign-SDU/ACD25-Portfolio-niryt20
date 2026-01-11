@@ -93,3 +93,16 @@ class Agent:
         scaled_u = self.Position[0] * rs.SurfaceDomain(self.srf, 0)[1]
         scaled_v = self.Position[1] * rs.SurfaceDomain(self.srf, 1)[1]
         self.local_curvature = rs.SurfaceCurvature(self.srf, (scaled_u, scaled_v))[6]
+
+
+# Factory for creating agents
+
+def build_agents(srf, num_agents):
+    agents = []
+    for _ in range(num_agents):
+        u = random.uniform(0, 1)
+        v = random.uniform(0, 1)
+        point = [u, v]
+        ag = Agent(srf, point)
+        agents.append(ag)
+    return agents
