@@ -23,7 +23,7 @@ import random
 O = (orix,oriy,oriz)
 S = (sizex,sizey)
 
-### initial UV grid
+## Initial UV grid
 def uv_grid(divU, divV):
     u = np.linspace(0.0, 1.0, divU)
     v = np.linspace(0.0, 1.0, divV)
@@ -31,3 +31,16 @@ def uv_grid(divU, divV):
 
     return U, V
 
+## Heightmap
+def heightmap(U, V, amplitude, frequency, phase):
+
+    # Sine wave
+    wave = np.sin((U * frequency + phase) * 2 * np.pi) * np.cos((V * frequency + phase) * 2 * np.pi)
+
+    # Sine ridges 
+    ridges = np.abs(np.sin(5 * U * np.pi)) * 0.5
+
+    # Combining waves
+    H = amplitude * (random.uniform(0.0,1.0)*wave + random.uniform(0.0,1.0)*ridges)
+
+    return H
