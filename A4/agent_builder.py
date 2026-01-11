@@ -74,7 +74,7 @@ class Agent:
     def update(self):
 
         if not self.alive:
-            return  # DEAD AGENTS DO NOTHING
+            return 
 
         # Move in UV (0-1)
         self.Position = rs.VectorAdd(self.Position, self.velocity)

@@ -27,6 +27,11 @@ In this assignment, you will develop an **agent-based system for surface rationa
 
 Your implementation must incorporate **at least two types of geometric signals** (chosen from curvature, slope, vector fields, scalar fields, and spatial influences) when defining agent behavior. The primary outputs of this assignment are: (1) a rationalized panelization of your surface and (2) simulated agent trajectories and fields that you document and analyze.
 
+## Project Overview
+
+- Heightmap from assignment 3
+- Movement of agents based on proximity of other agents and a curvature factor
+- Slope data is stored and agents generate visual representation of slope based on position on a given surface
 ---
 
 ## Repository Structure
