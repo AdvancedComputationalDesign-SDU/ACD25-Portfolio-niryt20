@@ -14,6 +14,7 @@ import random
 
 ## function for anchor points using rs.BoundingBox
 def boundingbox_anchor_pts(mesh):
+
     pts8 = rs.BoundingBox(mesh)
     pts4 = pts8[-4:]
 
@@ -44,3 +45,11 @@ def boundingbox_anchor_pts(mesh):
     
         anchor_pts.append(moved_pt_rot)
     return (anchor_pts)
+
+## initial UV grid
+def uv_grid(divU, divV):
+    u = np.linspace(0.0, 1.0, divU)
+    v = np.linspace(0.0, 1.0, divV)
+    U, V = np.meshgrid(u, v)
+
+    return U, V
