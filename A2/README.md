@@ -134,3 +134,11 @@ Branch geometry is influenced by an attractor point that pulls branch direction 
 ![Image 9](images/5_025_01.png)
 
 ## References
+
+Video on recursive brancing structure
+
+https://www.youtube.com/watch?v=wV6W69b-l7w
+
+### ChatGPT
+Normalizing vectors for smoother directional bias 
+Resolving issues with incompatible list structures
