@@ -24,6 +24,12 @@ length_factor = 0.5
 attractor = Point(-2, 2)
 attractor_strength = 0.1
 
+## 1st branch conditions
+A = (0, 0)
+V = (0, 1)
+
+## List containing branch geometry
+Lines = []
 ## Function for rotating a given vector
 def rotate_vector(v, angle_deg):
     angle_red = math.radians(angle_deg)
@@ -32,4 +38,7 @@ def rotate_vector(v, angle_deg):
     yr = x * math.sin(angle_rad) + y * math.cos(angle_rad)
     return (xr, yr)
 
-   
+def normalize(v):
+    l = math.hypot(v[0], v[1])
+    return (v[0]/l, v[1]/l)
+
