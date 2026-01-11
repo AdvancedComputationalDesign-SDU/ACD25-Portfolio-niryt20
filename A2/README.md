@@ -29,29 +29,41 @@ While the branching or growth approach can be inspired by L-systems, it does not
 ## Pseudo-Code
 
 1. **Initialize Variables**
-   - Set canvas dimensions (height and width).
-   - Define color values.
-   - Set number of attractor points
+    - Set number of generations
+    - Initial branch angle
+    - Maximum and minimum branch lengths and a length factor to control branch length behavior dependant on proximity to attractor point.
+    - Attractor point coordinates
+    - An attraction factor for controlling attraction strength to a point
+    - Starting point and direction (A, V)
+    - Empty list containing branch geometries via shapely
 
-2. **Create Blank Canvas**
-   - Initialize a 2D NumPy array filled with zeros.
+2. **Function Rotate Vector**
+    - Rotates a given vector by angle input
 
-3. **Generate Attractor Points**
-    -  Generate random attractor points within canvas dimensions
+3. **Function Normalize**
+    - returns a unit vector
 
-4. **Define Distance Function**
-    - Compute euclidian distance to attractor point
+4. **Function LengthField**
+    - Computes distance and from point to attractor point for controling branch length based on attractor point proximity
+    - a minimum length is guarenteed to avoid length = 0
 
-5. **Generate Pattern**
-    - **For** each pixel in canvas_
-        - Compute distance to attractor points
-        - Apply sine to distances
-        - Sum sine values
-        - Map normalized values to RGB channels
-        - Store values in canvas
+5. **Function Grow()**
+    - if gen is less than defined max number of generations, run function
+    - Compute vector from point to attractor point, add to direction vector and normalize to influence growth direction towards attractor point
+    - LengthField function computes branch length based on proximity to attractor point
+    - Compute two branch directions from initial input angle and the geometric influences
+    - Compute branch endpoints from geometric influences
+    - Grow(endpoint1, direction1, gen + 1)
+    - Grow(endpoint2, direction2, gen + 1)
 
-6. **Visualize Canvas as Image**
-    - matplotlib.pyplot as plt
+6. **Add initial branch to Lines**
+    - A in direction V
+
+7. **Call Grow(starting point, V, gen = 0)**
+
+8. **Visualize**
+    - Draw lines
+    - Draw Attractor point
 
 ## Technical Explaination
 
