@@ -11,11 +11,19 @@ search_exclude: false
 
 [View on GitHub]({{ site.github.repository_url }})
 
-![Example Canopy](images/canopy.jpg)
+## Table of Contents
+
+- [Objective](#objective)
+- [Pseudo-Code](#pseudo-code)
+- [Technical Explanation](#technical-explanation)
+- [Design Variations](#design-variations)
+- [References and AI Acknowledgments](#references-and-ai-acknowledgments)
 
 ## Objective
 
 In this assignment you will design and generate a **parametric structural canopy** in **Grasshopper** using the **GhPython (Python 3)** component. You will combine: (1) a **NumPy-driven heightmap** that modulates a NURBS surface, (2) **tessellation** of the resulting surface, and (3) **recursive, branching vertical supports** with controlled randomness. Your goal is to produce a small **family of design solutions** by varying parameters and algorithms, then communicate your process and results in a clear, reproducible report. You are asked to present **three** visually distinct designs. Each design must vary at least **two** of the implemented computational logic (heightmap-based surface geometry, tessellation strategy, branching supports).
+
+
 
 ---
 
