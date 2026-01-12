@@ -15,14 +15,9 @@ search_exclude: false
 
 ## Table of Contents
 
-- [Objective](#Objective)
 - [Pseudo-Code](#pseudo-code)
 - [Technical Explanation](#technical-explanation)
 - [Results](#results)
-
-## Objective
-
-The goal of this assignment is to create a Python program using NumPy to manipulate a 2-dimensional array and transform a blank canvas into a patterned image. You are asked apply various array operations, introduce randomness, and work with RGB channels to produce full-color images.
 
 ## Pseudo-Code
 
