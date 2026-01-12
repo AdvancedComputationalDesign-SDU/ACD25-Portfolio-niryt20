@@ -80,7 +80,7 @@ search_exclude: false
     - rs.EvaluatePlane generates a random point on plane for rotation
     - rs.VectorCreate creates the current rotation axis
     - rs.MeshClosestPoint locates closest point on mesh from branch
-        - at last gen - generates branch from endpoint to mesh
+        - at last gen - generates branch from endpoint to mesh(snaps to closest point)
 
 4.  **loop through anchor points, creating the supporting structures**
     - for A in a_pts:
