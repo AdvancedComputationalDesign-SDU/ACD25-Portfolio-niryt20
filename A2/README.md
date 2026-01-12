@@ -34,14 +34,14 @@ search_exclude: false
     - Rotates a given vector by angle input
 
 3. **Function Normalize**
-    - returns a unit vector
+    - Returns a unit vector
 
 4. **Function LengthField**
     - Computes distance and from point to attractor point for controling branch length based on attractor point proximity
-    - a minimum length is guarenteed to avoid length = 0
+    - A minimum length is guarenteed to avoid length = 0
 
 5. **Function Grow()**
-    - if gen is less than defined max number of generations, run function
+    - If gen is less than defined max number of generations, run function
     - Compute vector from point to attractor point, add to direction vector and normalize to influence growth direction towards attractor point
     - LengthField function computes branch length based on proximity to attractor point
     - Compute two branch directions from initial input angle and the geometric influences
@@ -60,7 +60,7 @@ search_exclude: false
 
 ## Technical Explanation
 
-Python and shapely is used to create a recursive branching structure. Branch lengths and branch directions are influenced by spatial context. From a starting point, two branches are recursively generated until a set number of recursion depth is reached. At each step, branch direction is influenced by proximity to an attractor point and a universel set starting angle. The directional bias is computed from a vector pointing from branch endpoint towards the attractor point and the attraction force is scaled by a user defined attractor point factor. Branch length is controlled by distance to the attractor point and a user defined falloff factor. The resulting line segments are stored and used as a basis for subsequent recursive calls.
+Python and shapely is used to create a recursive branching structure. Branch lengths and branch directions are influenced by spatial context. From a starting point, two branches are recursively generated until a set number of recursion depth is reached. At each step, branch direction is influenced by proximity to an attractor point and a universel set starting angle. The directional bias is computed from a vector pointing from branch endpoint, towards the attractor point and the attraction force, which is scaled by a user defined attractor point factor. Branch length is controlled by distance to the attractor point and a user defined falloff factor. The resulting line segments are stored and used as a basis for subsequent recursive calls.
 
 ## Geometric Influences
 Branch geometry is influenced by an attractor point that pulls branch direction based on a strength factor and a distance based field that controls branch length.
