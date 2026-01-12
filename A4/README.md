@@ -29,24 +29,24 @@ search_exclude: false
 
 ## Pseudo-Code
 
-### Agent Class
-class Agent
-    distance to other agents
-        curvature veight
-        returns distance weighted with curvature
+1. **Define Agent Class**
+    - class Agent
+        - distance to other agents
+            - curvature veight
+            - returns distance weighted with curvature
 
-    sorted neighbors
-        returns a sorted list of neigboring agents
+        - sorted neighbors
+            - returns a sorted list of neigboring agents
 
-    separation
-        Get N nearest neighboring agents
-        compute separation vector
-    
-    agent at edge check
-        if u,v = 0 or 1 kill agent
-    
-    move agent
-        position + velocity 
+        - separation
+            - Get N nearest neighboring agents
+            - compute separation vector
+        
+        - agent at edge check
+            - if u,v = 0 or 1 kill agent
+        
+        - move agent
+            - position + velocity 
 
 ### Build Agents
  agents
@@ -190,12 +190,11 @@ sc.sticky["agents"] = agents saves modified agents
 ## AI Acknowledgments
 
 # ChatGPT
-Agent Storage: storing information between tics and storing agents' paths was difficult. ChatGPT suggested using sticky when promted.
+- Agent Storage: storing information between tics and storing agents' paths was difficult. ChatGPT suggested using sticky when promted.
+    - if reset or "agents" not in sc.sticky: sc.sticky["agents"] = build_agents(srf, N)
 
-- if reset or "agents" not in sc.sticky: sc.sticky["agents"] = build_agents(srf, N)
-
-Visualization
-- Translating data from inside a python component into something visible in the grasshopper environment often with ChatGPT
+- Visualization
+    - Translating data from inside a python component into something visible in the grasshopper environment often with ChatGPT
 
 ## References
-W10 and W11 ACD material.
+- W10 and W11 ACD material.
