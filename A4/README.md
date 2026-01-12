@@ -34,68 +34,57 @@ search_exclude: false
         - distance to other agents
             - curvature veight
             - returns distance weighted with curvature
-
         - sorted neighbors
             - returns a sorted list of neigboring agents
-
         - separation
             - Get N nearest neighboring agents
             - compute separation vector
-        
         - agent at edge check
             - if u,v = 0 or 1 kill agent
-        
         - move agent
             - position + velocity 
 
-### Build Agents
- agents
-    empty list of agents
-    repeat:
-        random UV coordinate
-        create agent at coord
-        add to list of agents
-    return list of agents
+2. Build Agents
+    - agents
+        - empty list of agents
+        - repeat:
+            - random UV coordinate
+            - create agent at coord
+            - add to list of agents
+        - return list of agents
 
-### Storage
-if reset pressed OR no agent list exists:
-    sticky["agents"] = build_agents(surface, N)
+3. Storage
+    - if reset pressed OR no agent list exists:
+        - sticky["agents"] = build_agents(surface, N)
+    - agents = sticky["agents"]
 
-agents = sticky["agents"]
+4. Simulation
+    - for each agent in agents:
+        - if alive:
+            - agent.separation(agents, force_intensity, neighbor_count)
+    - for each agent in agents:
+        - agent.update()
+        - agent.check_if_dead()
 
-### Simulation
-for each agent in agents:
-    if alive:
-        agent.separation(agents, force_intensity, neighbor_count)
+5. Visualitation
+    - P = live agent position
+    - T = trails polyline
+    - TrailPoints = trail points history
+    - SlopeValues = all empty lists
+    - for each agent: 
+        - if agent.alive:
+            - convert UV → XYZ
+            - add to P
+        - if agent.trail has more than 1 point:
+            - create polyline from trail
+            - add to T
+            - for each point in trail:
+                - calculate slope from surface normal
+                - add slope to SlopeValues
+                - add point to TrailPoints
 
-for each agent in agents:
-    agent.update()
-    agent.check_if_dead()
-
-### Visualitation
-
-P = live agent position
-T = trails polyline
-TrailPoints = trail points history
-SlopeValues = all empty lists
-
-for each agent:
-    
-    if agent.alive:
-        convert UV → XYZ
-        add to P
-    
-    if agent.trail has more than 1 point:
-        create polyline from trail
-        add to T
-
-        for each point in trail:
-            calculate slope from surface normal
-            add slope to SlopeValues
-            add point to TrailPoints
-
-### Save updated agents
-sticky["agents"] = agents
+6. Save updated agents
+    - sticky["agents"] = agents
 
 ## Technical Explanation
 
