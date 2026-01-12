@@ -21,11 +21,11 @@ ini_angle = 15
 ## Branch length generation parameters
 max_length = 2.5
 min_length = 0.3
-length_factor = 0.25
+length_factor = 0.5
 
 ## Attractor point
-attractor = Point(2, 5)
-attractor_strength = 0.1
+attractor = Point(2, 2)
+attractor_strength = 0.0
 
 ## 1st branch conditions
 A = (0, 0)
