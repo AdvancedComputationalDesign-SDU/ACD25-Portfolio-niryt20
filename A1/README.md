@@ -48,7 +48,7 @@ search_exclude: false
 
 ## Technical Explanation
 
-Python with NumPy is used to generate sinus wave functions with interference. The NumPy Array named canvas stores values for each pixel. np.random.random creates a set number of random attractor points. The function "distance()" computes the Euclidean distance between a pixel and a attractor point. All canvas pixels are looped through and the distance to attractor points is computed. The sine values derived from the distance functions are summed. To visualize the interference pattern, the summed interference value is mapped to the red and green RGB color channels. The blue channel is derived from normalized distance values. r g and b values are stored in canvas and visualized via matplotlib.pyplot.
+Python with NumPy is used to generate sinus wave functions with interference. The NumPy Array named canvas, stores values for each pixel. np.random.random creates a set number of random attractor points. The function "distance()" computes the Euclidean distance between a pixel and a attractor point. All canvas pixels are looped through and the distance to attractor points is computed. The sine values derived from the distance functions are summed. To visualize the interference pattern, the summed interference value is mapped to the red and green RGB color channels. The blue channel is derived from normalized distance values. r g and b values are stored in canvas and visualized via matplotlib.pyplot.
 
 ## Results
 
