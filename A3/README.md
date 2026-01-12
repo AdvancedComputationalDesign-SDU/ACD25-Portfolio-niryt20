@@ -25,60 +25,55 @@ search_exclude: false
 
 2. **Define Functions**
 
-    - **Function boundingbox_anchor_pts(mesh)**
+    - **boundingbox_anchor_pts(mesh)**
         - rs.BoundingBox(mesh) to get 4 appropriate anchorpoints
         - loop through each anchor point, average coordinates to get a center point
         - rg.Transform.Rotation(angle, center point) rotates anchorpoints around center point
-    returns anchor points
+        - returns anchor points
 
-`heightmap(U, V, amplitude, frequency, phase)`
-    np.sin wave in U direction
-    np.cos wave in V direction
+    - **heightmap(U, V, amplitude, frequency, phase)**
+        - np.sin wave in U direction
+        - np.cos wave in V direction
+        - addition of simple np.sin ridges parallel to V
+        - returns height values in numpy array shaped as U,V
 
-    addition of simple np.sin ridges parallel to V
-returns height values in numpy array shaped as U,V
+    - **make_point_grid_xy(divU, divV, origin, size)**
+        - 1/(divU divV) normalized distance between points
+        - loops through normalized spacing, multiply by grid size to get real x, y coordinates
+        - returns grid of points
 
-`make_point_grid_xy(divU, divV, origin, size)`
-    1/(divU divV) normalized distance between points
+    - **move_along_z(grid of points)**
+        - loops through each point 
+        - add heightmap value to z coordinate
+        - returns moved grid of points
 
-    loops through normalized spacing, multiply by grid size to get real x, y coordinates
-returns grid of points
+    - **surface_from_point_grid(moved grid of points)**
+        - loops through moved grid of points
+        - flatten data structure
+        - retruns flattened list of points
+        - rs.AddSrfPtGrid(data structure information ,flattened list of points) generates a surface from moved grid of points
+        - returns surface
 
-`move_along_z(grid of points)`
-    loops through each point 
-        add heightmap value to z coordinate
-returns moved grid of points
+    - **sample_uniform_grid(surface, U, V)**
+        - rs.SurfaceDomain obtains start and end domains in U and V direction
+        - i/(U and V) for U and V + 1 produces evenly spaced U and V parameters
+        - returns lists of evenly spaved U and V parameters
+        - loops through U and V parameter
+        - rs.EvaluateSurface returns 3d points for the given U and V coordinate
+        - returns grid of surface points
 
-`surface_from_point_grid(moved grid of points)`
-    loops through moved grid of points
-        flatten data structure
-    retruns flattened list of points
-
-    rs.AddSrfPtGrid(data structure information ,flattened list of points) generates a surface from moved grid of points
-returns surface
-
-`sample_uniform_grid(surface, U, V)`
-    rs.SurfaceDomain obtains start and end domains in U and V direction
-    i/(U and V) for U and V + 1 produces evenly spaced U and V parameters
-        returns lists of evenly spaved U and V parameters
-    
-    loops through U and V parameter
-        rs.EvaluateSurface returns 3d points for the given U and V coordinate
-returns grid of surface points
-
-`tri_mesh_from_points(grid of surface points)`
-    vertices = [pts[i][j] for i in range(rows) for j in range (cols)] devolves datastructure into a 1d list
-    for each quad cell in grid of surface points
-        a = i * vcols + j
-        b = a + 1
-        c = b + vcols
-        d = c - 1
-
-        creates two triangle cells via
-            faces.append([a, b, c])
-            faces.append([a, d, c])
-    rs.AddMesh constructs a mesh from the list of vertices and the triangular faces
-returns mesh
+    - **tri_mesh_from_points(grid of surface points)**
+        - vertices = [pts[i][j] for i in range(rows) for j in range (cols)] 
+            - devolves datastructure into a 1d list for each quad cell in grid of surface points
+            - a = i * vcols + j
+            - b = a + 1
+            - c = b + vcols
+            - d = c - 1
+        - creates two triangle cells via
+            - faces.append([a, b, c])
+            - faces.append([a, d, c])
+        - rs.AddMesh constructs a mesh from the list of vertices and the triangular faces
+        - returns mesh
 
 `Grow(starting point, starting direction, length, number of generations)`
     rs.PlaneFromNormal to generate a plane with current direction as the normal
