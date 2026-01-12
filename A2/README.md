@@ -134,7 +134,7 @@ Branch geometry is influenced by an attractor point that pulls branch direction 
 |----|----|----|----|----|
 |5|15 degrees|0.5|(2,0)|0.0|
 
-![Image 10](images/0_05_0.png)
+![Image 10](images/2_05_0.png)
 
 ## References
 
