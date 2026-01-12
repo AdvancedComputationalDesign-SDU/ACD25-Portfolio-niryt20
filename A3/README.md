@@ -105,8 +105,9 @@ The structural branches are recursively generated from anchor points. Each itera
 |50|50|3|1|0.25|0|0|1|10|10|0|0.42|5|10|0.42|8|25|25|
 
 
-
+#### View 1
 ![Design A Branch](images/ABranch.png)
+#### View 2
 ![Design A Canopy](images/ACanopy.png)
 
 
@@ -117,8 +118,9 @@ The structural branches are recursively generated from anchor points. Each itera
 |50|50|1|1|0.25|0|0|1|10|10|0|0.42|7|0.27|25|17|25|25|
 
 
-
+#### View 1
 ![Design B Branch](images/BBranch.png)
+#### View 2
 ![Design B Canopy](images/BCanopy.png)
 
 
@@ -129,8 +131,9 @@ The structural branches are recursively generated from anchor points. Each itera
 |50|50|2|4|0.36|0|0|2|10|10|0|0.42|4|0.4|25|17|100|100|
 
 
-
+#### View 1
 ![Design C Branch](images/CBranch.png)
+#### View 2
 ![Design C Canopy](images/CCanopy.png)
 
 ## References and AI Acknowledgments
