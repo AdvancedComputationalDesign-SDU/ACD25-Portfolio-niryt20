@@ -75,19 +75,19 @@ search_exclude: false
         - rs.AddMesh constructs a mesh from the list of vertices and the triangular faces
         - returns mesh
 
-`Grow(starting point, starting direction, length, number of generations)`
-    rs.PlaneFromNormal to generate a plane with current direction as the normal
-    rs.EvaluatePlane generates a random point on plane for rotation
-    rs.VectorCreate creates the current rotation axis
-    rs.MeshClosestPoint locates closest point on mesh from branch
-        at last gen - generates branch from endpoint to mesh
+3. **Grow(starting point, starting direction, length, number of generations)**
+    - rs.PlaneFromNormal to generate a plane with current direction as the normal
+    - rs.EvaluatePlane generates a random point on plane for rotation
+    - rs.VectorCreate creates the current rotation axis
+    - rs.MeshClosestPoint locates closest point on mesh from branch
+        - at last gen - generates branch from endpoint to mesh
 
-    for A in a_pts:
-        B = rs.PointAdd(A, rs.VectorScale(V, L))
-        Lines.append(rs.AddLine(A, B))
-        Grow(B, V, L, 0)
-    loop through each anchor point
-returns list of lines
+4.  **loop through anchor points, creating the supporting structures**
+    - for A in a_pts:
+        - B = rs.PointAdd(A, rs.VectorScale(V, L))
+        - Lines.append(rs.AddLine(A, B))
+        - Grow(B, V, L, 0)
+    - returns list of lines
 
 ## Technical Explanation
 
