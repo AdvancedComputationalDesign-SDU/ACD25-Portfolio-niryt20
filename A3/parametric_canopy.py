@@ -2,6 +2,8 @@
 Assignment 3: Parametric Structural Canopy
 
 Author: Nikolaj Rytter
+Description:
+This script generates a tri mesh based on a heightmap with branching supports using recursive functions and geometric transformations.
 """
 
 ## Importing libraries
@@ -12,7 +14,7 @@ import rhinoscriptsyntax as rs
 import math
 import random
 
-## function for anchor points using rs.BoundingBox
+## Function for anchor points using rs.BoundingBox
 def boundingbox_anchor_pts(mesh):
 
     pts8 = rs.BoundingBox(mesh)
@@ -46,7 +48,7 @@ def boundingbox_anchor_pts(mesh):
         anchor_pts.append(moved_pt_rot)
     return (anchor_pts)
 
-## initial UV grid
+## Initial UV grid
 def uv_grid(divU, divV):
     u = np.linspace(0.0, 1.0, divU)
     v = np.linspace(0.0, 1.0, divV)
