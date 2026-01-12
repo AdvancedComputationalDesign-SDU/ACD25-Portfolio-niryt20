@@ -134,5 +134,10 @@ The structural branches are recursively generated from anchor points. Each itera
 ![Design C Canopy](images/CCanopy.png)
 
 ## References and AI Acknowledgments
-Branching structure youtube video
+- ChatGPT
+    - Weighted ridges in heightmap to make the surfaces more interesting
+    - often promted to fix wrong data type passed into python component
+    - often promted to fix and help visualize python components outputs
+
+- Branching structure youtube video
 https://www.youtube.com/watch?v=wV6W69b-l7w&t=1345s
