@@ -1,238 +1,242 @@
 """
-Assignment 3: Parametric Structural Canopy — Pseudocode Scaffold
+Assignment 3: Parametric Structural Canopy
 
-Author: Your Name
-
-    This file is a **high-level pseudocode**.
-    It outlines the pipeline and function responsibilities. 
-    Use it as a guide and fill in the bodies with your own logic.
+Author: Nikolaj Rytter
+Description:
+This script generates a tri mesh based on a heightmap with branching supports using recursive functions and geometric transformations.
 """
 
-#r: numpy
+## Importing libraries
 import numpy as np
+import Rhino.Geometry as rg
+import ghpythonlib.treehelpers as th
 import rhinoscriptsyntax as rs
+import math
 import random
 
-# -------------------------------
-# Helpers
-# -------------------------------
+## Function for anchor points using rs.BoundingBox
+def boundingbox_anchor_pts(mesh):
 
-def seed_everything(seed):
-    """Set seeds for reproducibility.
-    Parameters
-    ----------
-    seed : int | None
-        Random seed for reproducibility.
-    """
-    if seed is None:
-        return
-    try:
-        random.seed(seed)
-        np.random.seed(seed)
-    except Exception as e:
-        raise RuntimeError(f"Failed to set random seeds: {e}")
+    pts8 = rs.BoundingBox(mesh)
+    pts4 = pts8[-4:]
 
+    out_pts = []
+    for pts0 in pts4:
+        out_pts.append(rg.Point3d(pts0.X, pts0.Y, 0))
+    
+    x = sum([pt.X for pt in out_pts]) / 4.0
+    y = sum([pt.Y for pt in out_pts]) / 4.0
+    z = sum([pt.Z for pt in out_pts]) / 4.0
 
+    bounds_center = rg.Point3d(x, y, z)
 
+    anchor_pts = []
+
+    angle_rad = math.radians(anchor_rot_angle)
+    rot = rg.Transform.Rotation(angle_rad, bounds_center)
+
+    for pt in out_pts:
+        v_anchor_center = pt - bounds_center
+    
+        v_scaled = v_anchor_center * anchor_scale
+    
+        moved_pt = bounds_center + v_scaled
+    
+        moved_pt_rot = moved_pt
+        moved_pt_rot.Transform(rot)
+    
+        anchor_pts.append(moved_pt_rot)
+    return (anchor_pts)
+
+## Initial UV grid
 def uv_grid(divU, divV):
-    """Create uniform UV samples in [0,1]x[0,1].
-    Hints: Use `numpy.linspace` and `numpy.meshgrid`.
-    Returns
-    -------
-    U, V : 2D arrays
-        Same shape grids for sampling surfaces/heightmaps.
-    """
-    # TODO: Create arrays U and V using np.linspace and np.meshgrid
-    # TODO: Ensure U and V are 2D grids with shape (divU, divV)
-    raise NotImplementedError("Implement using np.linspace and np.meshgrid")
+    u = np.linspace(0.0, 1.0, divU)
+    v = np.linspace(0.0, 1.0, divV)
+    U, V = np.meshgrid(u, v)
 
+    return U, V
 
-def bbox_corners(geo):
-    """Return four reasonable anchor points for supports.
-    Hints: `rs.BoundingBox(geo)` returns 8 corners. Pick a subset (e.g.,
-    [0,1,3,4]) or choose custom anchors.
-    """
-    # TODO: Get bounding box corners using rs.BoundingBox(geo)
-    # TODO: Select four meaningful corners from the 8 returned points
-    raise NotImplementedError("Implement using rs.BoundingBox or custom logic")
+## Heightmap
+def heightmap(U, V, amplitude, frequency, phase):
 
+    # sine wave
+    wave = np.sin((U * frequency + phase) * 2 * np.pi) * np.cos((V * frequency + phase) * 2 * np.pi)
 
-# -------------------------------
-# 1) Heightmap (placeholder)
-# -------------------------------
+    # sine ridges 
+    ridges = np.abs(np.sin(5 * U * np.pi)) * 0.5
 
-def heightmap(U, V, amplitude=1.0, frequency=1.0, phase=0.0):
-    """Compute a scalar field H over U,V.
-    Hints: Combine sin/cos, ridges, fBm noise, radial attractors, etc.
-    Avoid loops by vectorizing where possible (NumPy arrays).
-    Returns: H with same shape as U,V.
-    """
-    # TODO: Build a heightmap using vectorized NumPy operations
-    # TODO: Consider combining sin, cos, noise, or attractor-based functions
-    raise NotImplementedError("Design your own heightmap function")
+    # combining waves
+    H = amplitude * (random.uniform(0.0,1.0)*wave + random.uniform(0.0,1.0)*ridges)
 
+    return H
 
-# -------------------------------
-# 2) Source point grid (planar OR sampled from surface)
-# -------------------------------
+## Rectangular grid of points
+def make_point_grid_xy(divU, divV, origin, size):
 
-def make_point_grid_xy(divU, divV, origin=(0.0, 0.0, 0.0), size=(10.0, 10.0)):
-    """Create a simple planar XY grid of points as a fallback when no surface exists.
-    Hints: Build with UV samples → map to XY using origin/size. Return a
-    rectangular list-of-lists of points.
-    """
-    # TODO: Build a 2D grid of points using UV samples
-    # TODO: Map UV to XY coordinates based on origin and size
-    raise NotImplementedError("Map UV samples to XY coordinates and return a grid")
+    ox, oy, oz = origin
+    sx, sy = size
 
+    step_u = 1.0 / (divU - 1) if divU > 1 else 0
+    step_v = 1.0 / (divV - 1) if divV > 1 else 0
 
-def sample_point_grid_from_surface(base_surface, U, V):
-    """Sample raw points from an existing NURBS surface without offsets.
-    Hints: Use `rs.SurfaceDomain(base_surface, dir)` to get real-valued domains
-    and map unit U,V to those intervals. Evaluate with `rs.EvaluateSurface`.
-    Returns: list[list[point]] with same dimensions as U,V.
-    """
-    # TODO: Get surface domains with rs.SurfaceDomain
-    # TODO: Convert unit UV grids to real parameter values
-    # TODO: Use rs.EvaluateSurface to build the point grid
-    raise NotImplementedError("Sample using rs.SurfaceDomain + rs.EvaluateSurface")
+    grid = []
+    for j in range(int(divV)):
+        v = j * step_v
+        row = []
+        for i in range(int(divU)):
+            u = i * step_u
 
+            x = ox + u * sx
+            y = oy + v * sy
+            row.append((x, y, oz))
+        grid.append(row)
 
-# -------------------------------
-# 3) Deform point grid (Z or surface normals)
-# -------------------------------
+    return grid
 
-def manipulate_points_z(point_grid, H):
-    """Return a deformed copy of a planar point_grid by offsetting along +Z.
-    Hints: For each point p=(x,y,z), produce (x, y, z + H[i,j]). Keep shapes consistent.
-    """
-    # TODO: Iterate over point grid and apply height H along +Z direction
-    # TODO: Maintain grid structure and point order
-    raise NotImplementedError("Offset planar grid along +Z using H")
+## Moving along z based on heightmap
+def move_along_z(pts):
+    pts_moved = [
+        [
+            (x, y, float(z + a[i, j]))
+            for j, (x, y, z) in enumerate(row)
+        ]
+    for i, row in enumerate(pts)
+    ]
+    return pts_moved
 
-
-def manipulate_points_along_normals(point_grid, H, base_surface, U, V):
-    """Deform points by offsetting along surface normals.
-    Hints:
-      - Map unit U,V to real surface params via `rs.SurfaceDomain`.
-      - Query normals with `rs.SurfaceNormal(base_surface, (u,v))`.
-      - Displace each point: p + H[i,j] * n.
-    Edge cases: if normal is None or near-zero, fall back or skip.
-    """
-    # TODO: Get surface normals at each UV and displace points along them
-    # TODO: Handle cases where normals may be None or zero-length
-    raise NotImplementedError("Offset sampled points along surface normals")
-
-
-# -------------------------------
-# 4) Construct canopy surface from points
-# -------------------------------
-
+## Surface from moved points
 def surface_from_point_grid(point_grid):
-    """Build a NURBS surface from a rectangular grid of points.
-    Hints: Flatten the grid and use `rs.AddSrfPtGrid((rows, cols), flat_points)`.
-    Returns: surface id (Brep) or None.
-    """
-    # TODO: Flatten grid and pass to rs.AddSrfPtGrid to construct surface
-    # TODO: Return surface ID
-    raise NotImplementedError("Use rs.AddSrfPtGrid to build a surface")
 
+    rows = len(point_grid)
+    cols = len(point_grid[0])
 
-# -------------------------------
-# 5) Uniform sampling + tessellation
-# -------------------------------
+    flat_points = [pt for row in point_grid for pt in row]
 
-def sample_surface_uniform(surface_id, divU, divV):
-    """Sample points on a surface using uniform UV in [0,1].
-    Hints: `rs.SurfaceDomain` to map unit UV → real UV, then `rs.EvaluateSurface`.
-    Returns: list[list[point]].
-    """
-    # TODO: Map uniform UV samples to real surface parameters
-    # TODO: Use rs.EvaluateSurface to create point grid
-    raise NotImplementedError("Sample the surface uniformly into a point grid")
+    srf_id = rs.AddSrfPtGrid((rows, cols), flat_points)
+    return srf_id
 
+## Uniform grid from srf
+def sample_uniform_grid(surface, U, V):
+    du0, du1 = rs.SurfaceDomain(surface, 0)
+    dv0, dv1 = rs.SurfaceDomain(surface, 1)
 
-def tessellate_panels_from_grid(point_grid):
-    """Create panels from each cell in a point grid.
-    Options:
-      - Two triangular NURBS patches per quad via `rs.AddSrfPt([a,b,d])`, etc.
-      - Or construct a Mesh (acceptable if the brief allows meshes).
-    Return a list of panel ids, consistent in type.
-    """
-    # TODO: For each cell in the grid, create two triangular or one quad panel
-    # TODO: Use rs.AddSrfPt or mesh construction based on desired output
-    raise NotImplementedError("Convert grid cells into panels (tri or quad)")
+    pu = [du0 + (du1 - du0)*(i/float(U)) for i in range (U+1)]
+    pv = [dv0 + (dv1 - dv0)*(i/float(V)) for i in range (V+1)]
 
+    pts = []
 
-# -------------------------------
-# 6) Branching supports (placeholder)
-# -------------------------------
+    for u in pu:
+        row = []
+        for v in pv:
+            tmp_pt = rs.EvaluateSurface(surface, u, v)
+            row.append(tmp_pt)
+        pts.append(row)
+    
+    return pts
 
-def generate_supports(roots, depth=2, length=5.0, length_reduction=0.7, n_children=2, seed=None):
-    """Generate a simple recursive branching structure from anchor points.
-    Hints:
-      - Seed randomness (`random` / `numpy.random`).
-      - Build segments with `rs.AddLine(start, end)`.
-      - Optionally add jitter per generation and terminate at `depth`.
-      - (Optional) attract to canopy by projecting or intersecting with surface/mesh.
-    Return a list of curve ids.
-    """
-    # TODO: Use recursive logic to generate branching curves from root points
-    # TODO: Add randomness and length reduction per generation
-    raise NotImplementedError("Implement recursive branching from given roots")
+## Tri mesh from surface points
+def tri_mesh_from_points(pts):
 
+    rows = len(pts)
+    cols = len(pts[0])
 
-# -------------------------------
-# Pipeline (read-only outline)
-# -------------------------------
-# The following mirrors the TEMPLATE.md pseudocode. It does not execute any
-# geometry by default and leaves GhPython outputs as empty placeholders. Fill in
-# your implementations above and call them here.
+    vertices = [pts[i][j] for i in range(rows) for j in range (cols)]
 
-# Example variable names expected from GhPython inputs:
-# base_surface, divU, divV, amplitude, frequency, phase,
-# rec_depth, br_length, len_reduct, n_branches, seed
+    faces = []
+    vcols = cols
 
-# 1. Seed RNG
-seed_everything(seed)
+    for i in range(rows - 1):
+        for j in range(cols - 1):
+            a = i * vcols + j
+            b = a + 1
+            c = b + vcols
+            d = c - 1
 
-# 2. Build UV grids
-U, V = uv_grid(divU, divV)
+            faces.append([a, b, c])
+            faces.append([a, d, c])
 
-# 3. Heightmap
-H = heightmap(U, V, amplitude=amplitude, frequency=frequency, phase=phase)
+    mesh = rs.AddMesh(vertices, faces)
+    return mesh
 
-# 4. Source point grid (choose ONE)
-# P_src = make_point_grid_xy(divU, divV, origin=(0,0,0), size=(10,10))
-P_src = sample_point_grid_from_surface(base_surface, U, V)
+## Branching structure
+def Grow(pt, v, length, g):
+    if g >= gen:
+        return
 
-# 5. Deform points (choose ONE)
-# P_def = manipulate_points_z(P_src, H)
-P_def = manipulate_points_along_normals(P_src, H, base_surface, U, V)
+    plane = rs.PlaneFromNormal(pt, v)
+    random_pt = rs.EvaluatePlane(plane, [random.uniform(-1, 1), random.uniform(-1, 1)])
+    rot_axis = rs.VectorCreate(random_pt, pt)
 
-# 6. Construct canopy surface
-surf = surface_from_point_grid(P_def)
+    V1 = rs.VectorRotate(v, random.uniform(-angle,0), rot_axis)
+    pt1 = rs.PointAdd(pt, rs.VectorScale(V1, length))
 
-# 7. Uniform sampling for panelization
-Sgrid = sample_surface_uniform(surf, divU, divV)
+    if g + 1 == gen:
+        pt1 = rs.MeshClosestPoint(mesh, pt1)[0]
 
-# 8. Tessellate into panels
-panels = tessellate_panels_from_grid(Sgrid)
+    L1 = rs.AddLine(pt, pt1)
+    Lines.append(L1)
 
-# 9. Choose support anchors
-roots = bbox_corners(surf)
+    Grow(pt1, V1, length * random.uniform(0.75,0.95), g+1)
 
-# 10. Generate supports
-supports = generate_supports(
-    roots,
-    depth=rec_depth,
-    length=br_length,
-    length_reduction=len_reduct,
-    n_children=n_branches,
-    seed=seed,
-)
+    V2 = rs.VectorRotate(v, random.uniform(0,angle), rot_axis)
+    pt2 = rs.PointAdd(pt, rs.VectorScale(V2, length))
 
-# 11. Set GhPython outputs
-out_surface      = None
-out_tessellation = []
-out_supports     = []
+    if g + 1 == gen:
+        pt2 = rs.MeshClosestPoint(mesh, pt2)[0]
+
+    L2 = rs.AddLine(pt, pt2)
+    Lines.append(L2)
+
+    Grow(pt2, V2, length * random.uniform(0.75,0.95), g+1)
+
+##Inputs
+
+#U and V
+dU = int(dU)
+dV = int(dV)
+
+U1 = int(U1)
+V1 = int(V1)
+
+#Seed
+random.seed(seed)
+
+#Size and origin of canopy
+O = (orix,oriy,oriz)
+S = (sizex,sizey)
+
+#Branching input
+V = [0,0,1]
+Lines = []
+
+###Run Functions###
+
+# UV grid
+U_grid, V_grid = uv_grid(dU, dV)
+
+# Heightmap
+a = heightmap(U_grid, V_grid, amp, frq, pha)
+
+# Grid of points
+pts = make_point_grid_xy(dU, dV, O, S)
+
+# Moving grid points along z
+pts_moved = move_along_z(pts)
+
+# Surface from moved points
+srf = surface_from_point_grid(pts_moved)
+
+# Surface sampling
+pts_grid_UV = sample_uniform_grid(srf, U1, V1)
+
+# Creating tri meshes
+mesh = tri_mesh_from_points(pts_grid_UV)
+
+# Anchor points from boundingbox    
+a_pts = boundingbox_anchor_pts(mesh)
+
+## Branching from anchorpoints
+for A in a_pts:
+    B = rs.PointAdd(A, rs.VectorScale(V, L))
+    Lines.append(rs.AddLine(A, B))
+    Grow(B, V, L, 0)
