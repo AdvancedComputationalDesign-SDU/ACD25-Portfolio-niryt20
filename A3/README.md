@@ -20,11 +20,16 @@ search_exclude: false
 
 ## Pseudo-Code
 
-`boundingbox_anchor_pts(mesh)`
-    rs.BoundingBox(mesh) to get 4 appropriate anchorpoints
-    loop through each anchor point, average coordinates to get a center point
-    rg.Transform.Rotation(angle, center point) rotates anchorpoints around center point
-returns anchor points
+1. **Initialize Variables**
+    - Passed in via grasshopper inputs
+
+2. **Define Functions**
+
+    - **Function boundingbox_anchor_pts(mesh)**
+        - rs.BoundingBox(mesh) to get 4 appropriate anchorpoints
+        - loop through each anchor point, average coordinates to get a center point
+        - rg.Transform.Rotation(angle, center point) rotates anchorpoints around center point
+    returns anchor points
 
 `heightmap(U, V, amplitude, frequency, phase)`
     np.sin wave in U direction
